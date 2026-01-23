@@ -53,7 +53,7 @@
 
                         <li><a href="#resources">Resources</a></li>
                         <li><a href="#contact">Contact</a></li>
-                        <li><a href="#community">Conmmunity</a></li>
+                        <li><a href="#community">Community</a></li>
                     </ul>
 
                     <div class="auth-buttons">
@@ -139,11 +139,145 @@
             <div class="cta-container">
                 <a href="#register" class="btn btn-primary">Join Our Community Now</a>
             </div>
-
         </div>
     </section>
 
 
+   <section class="testimonials-section" id="testimonials">
+        <div class="container">
+            <div class="testimonial-header">
+                <h2>Highly Rated by Thousands of Students</h2>
+            </div>
+
+            <div class="testimonial-wrapper">
+                <button class="nav-arrow prev-arrow" onclick="changeSlide(-1)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+                </button>
+
+                <div class="slider-container">
+                    <div class="slider-track">
+                        <div class="testimonial-card active card-blue">
+                            <div class="testimonial-content">
+                                <img src="recommendation.gif" alt="Quote Icon">
+                                <h3>Nguyen Thi Thien Thanh</h3>
+                                <p class="student-review">
+                                    "You are a very dedicated instructor, with a teaching style that is detailed and easy to understand. Algorithmic thinking is explained clearly, and each lesson includes specific examples and practice exercises, which help me gain a deeper understanding instead of just learning theory.
+                                    <br>
+                                    <br>
+                                    You always keep track of students' learning progress and are willing to answer questions whenever I do not understand something. The courses, ranging from basic programming to advanced levels and data structures and algorithms, are well-structured and suitable for learners who truly want to improve their programming mindset.
+                                    <br>
+                                    <br>
+                                    After a period of studying, I have noticed clear improvement in myself. Although I am a slow learner, your step-by-step teaching approach, starting from the fundamentals and gradually moving to more advanced topics, has helped me keep up with the lessons and build a solid understanding. I have also become more confident in analyzing problems and applying appropriate solutions when writing code.
+                                    <br>
+                                    <br>
+                                    Thank you for creating a comfortable and friendly learning environment and for helping me make significant progress."
+                                </p>
+                            </div>
+                            <div class="testimonial-image-box">
+                                <div class="image-wrapper">
+                                    <img src="z7460457841426_8dbc5a1953593a6652e12955f0058e55.jpg" alt="Student Nguyen Thi Thien Thanh" class="student-img">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="testimonial-card card-beige">
+                            <div class="testimonial-content">
+                                <img src="creative.gif" alt="Quote Icon">
+                                <h3>Le Nhat Tri</h3>
+                                <p class="student-review">
+                                    "Data Structures and Algorithms is one of the essential foundations for programmers, where we have to deal with various concepts such as sorting algorithms, linked lists, different types of trees, and more. My journey of learning Data Structures and Algorithms initially felt like hitting a dead end. However, after discovering Nguyễn Thanh Phong's DSA course and experiencing it throughout the entire program, I was able to explore many new approaches and step-by-step methods to expand my logical thinking. As a result, I learned how to solve algorithmic problems that previously took me nearly four to six hours to complete.
+                                    <br>
+                                    <br>
+                                    In addition, Phong's enthusiasm and dedication, reflected through his interactive teaching style and clear communication, became a strong source of motivation that encouraged me to overcome this challenging subject. The exercises are diverse, and all instructional videos are carefully recorded during the lessons, allowing students to review their work, identify mistakes, and reflect on areas for improvement. This also makes it easier to ask questions and receive further guidance from the instructor.
+                                    <br>
+                                    <br>
+                                    Thanks very much my mentor.""
+                                </p>
+                            </div>
+                            <div class="testimonial-image-box">
+                                <div class="image-wrapper">
+                                    <img src="YxV50XLJAaSYJmRIHR6qLh7RQHX9oYbI.jpg" alt="Student Le Nhat Tri" class="student-img">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="testimonial-card card-pink">
+                            <div class="testimonial-content">
+                                <img src="machine-learning.gif" alt="Quote Icon">
+                                <h3>Nguyen Duc Tinh</h3>
+                                <p class="student-review">
+                                    "After completing the DSA course, I found the teaching approach to be very clear, systematic, and easy to follow. The instructor did not simply focus on showing how to write code, but instead placed strong emphasis on explaining algorithmic thinking and problem-solving strategies. This helped me understand the underlying logic of each problem before starting to code, allowing me to approach programming tasks in a more structured and effective way rather than relying on trial and error.
+                                    <br>
+                                    <br>
+                                    The course curriculum is thoughtfully designed and well-organized, progressing smoothly from basic to more advanced concepts. Fundamental topics such as arrays and sorting algorithms are introduced first to build a solid foundation. These are then followed by more complex data structures, including linked lists, trees, and graphs. Each topic is presented in a logical sequence, with clear explanations and examples that make even challenging concepts easier to understand.
+                                    <br>
+                                    <br>
+                                    Overall, this DSA course has significantly improved my understanding of data structures and algorithms. It has strengthened my logical thinking and helped me approach programming problems more systematically."
+                                </p>
+                            </div>
+                            <div class="testimonial-image-box">
+                                <div class="image-wrapper">
+                                    <img src="z7460462304251_f813d6b53d565699a6a9958594ef9202.jpg" alt="Student Nguyen Duc Tinh" class="student-img">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="nav-arrow next-arrow" onclick="changeSlide(1)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+                </button>
+            </div>
+
+            <div class="testimonial-dots">
+                <span class="dot active" onclick="currentSlide(1)"></span>
+                <span class="dot" onclick="currentSlide(2)"></span>
+                <span class="dot" onclick="currentSlide(3)"></span>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        let slideIndex = 0;
+        showSlides(slideIndex);
+
+        function changeSlide(n) {
+            slideIndex += n;
+            showSlides(slideIndex);
+        }
+
+        function currentSlide(n) {
+            slideIndex = n - 1;
+            showSlides(slideIndex);
+        }
+
+        function showSlides(n) {
+            const track = document.querySelector('.slider-track');
+            const slides = document.getElementsByClassName("testimonial-card");
+            const dots = document.getElementsByClassName("dot");
+
+            // Xử lý vòng lặp khi đến slide cuối/đầu
+            if (n >= slides.length) { 
+                slideIndex = 0;
+            }    
+            if (n < 0) { 
+                slideIndex = slides.length - 1;
+            }
+            
+            // Tính toán vị trí trượt (mỗi slide chiếm 100% width)
+            const translateValue = -(slideIndex * 100);
+            track.style.transform = `translateX(${translateValue}%)`;
+            
+            // Cập nhật trạng thái active cho dots
+            for (let i = 0; i < dots.length; i++) {
+                dots[i].classList.remove("active");
+            }
+            
+            if (dots[slideIndex]) {
+                dots[slideIndex].classList.add("active");
+            }
+        }
+    </script>
     
 
 </body>

@@ -79,7 +79,7 @@ header {
 .nav-menu > li > a::after {
     content: '';
     position: absolute;
-    width: 0;; /* Ban đầu chiều dài bằng 0 */
+    width: 0; /* Ban đầu chiều dài bằng 0 */
     height: 2px; /* Độ dày */
     bottom: 0;
     left: 0;
@@ -232,7 +232,8 @@ header {
     position: relative;
     display: inline-block;
     z-index: 1;
-    margin-bottom: 40px;
+    margin-top: -30px;
+    margin-bottom: 10px;
 }
 
 .hero h1::before {
@@ -262,7 +263,7 @@ header {
     justify-content: center;
     gap: 60px;
     flex-wrap: wrap;
-    margin-top: 80px;
+    margin-top: 40px;
 }
 
 .teacher-card {
@@ -274,6 +275,7 @@ header {
     text-align: center;
     transition: transform 0.3s;
     position: relative;
+    margin-bottom: -50px;
 }
 
 .teacher-card:hover {
@@ -432,6 +434,7 @@ header {
     position: relative;
     z-index: 2;
     display: inline-block;
+    margin-top: -100px;
 }
 
 .section-header h2::after { /* Tạo vệt xanh nhạt */
@@ -474,15 +477,15 @@ header {
 }
 
 .card-blue {
-    background-color: #f4f9fc;
+    background-color: #E0F2F1;
 }
 
 .card-beige {
-    background-color: #fcfbf5; 
+    background-color: #FFF9C4; 
 }
 
 .card-pink {
-    background-color: #fff1f2; 
+    background-color: #FDE2E4; 
 }
 
 .card-icon { /* icon */
@@ -515,7 +518,7 @@ header {
 .cta-container {
     text-align: center;
     margin-top: 40px;
-    margin-bottom: 60px
+    margin-bottom: -40px;
 }
 
 .cta-container .btn {
@@ -535,3 +538,214 @@ header {
 }
 
 
+/* ===== TESTIMONIALS SECTION ===== */
+.testimonials-section {
+    padding: 10px 0 100px;
+    background: #fff;
+}
+
+.testimonial-header {
+    text-align: center;
+    margin-bottom: 60px;
+    position: relative;
+}
+
+.testimonial-header h2 {
+    font-size: 36px;
+    color: #0d4e3b;
+    font-weight: bold;
+    position: relative;
+    display: inline-block;
+    padding: 0 20px;
+    z-index: 1;
+    margin-top: -100px;
+}
+
+.testimonial-header h2::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -70px;
+    height: 65%;
+    background-color: #d8ebe4;
+    transform: translateY(-20%) skewX(-10deg) rotate(-2deg);
+    z-index: -1;
+    border-radius: 4px;
+    animation: highlightExpand 2s infinite ease-in-out;
+}
+
+.testimonial-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    position: relative;
+}
+
+/* FIX: Slider container */
+.slider-container {
+    overflow: hidden;
+    width: 100%;
+    max-width: 1000px;
+}
+
+.testimonial-card {
+    background-color: #eaf6f6; 
+    border-radius: 30px;
+    padding: 50px;
+    display: none;
+    align-items: center;
+    width: 100%;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* .testimonial-card.active {
+    display: flex;
+} */
+
+.slider-container {
+    overflow: hidden;
+    width: 100%;
+    max-width: 1000px;
+    position: relative;
+}
+
+.slider-track {
+    display: flex;
+    transition: transform 1s ease-in-out; /* Hiệu ứng trượt mượt */
+    width: 100%;
+}
+
+/* Cập nhật lại .testimonial-card */
+.testimonial-card {
+    background-color: #eaf6f6; 
+    border-radius: 30px;
+    padding: 50px;
+    display: flex; /* Thay đổi từ display: none */
+    align-items: center;
+    min-width: 100%; /* Thay đổi từ max-width */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    transition: box-shadow 0.3s ease;
+    flex-shrink: 0; /* Ngăn card bị co lại */
+}
+
+.testimonial-card.card-blue {
+    background-color: #E0F2F1 !important;
+}
+
+.testimonial-card.card-beige {
+    background-color: #FFF9C4 !important;
+}
+
+.testimonial-card.card-pink {
+    background-color: #FDE2E4 !important;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+}
+
+.testimonial-content {
+    flex: 3;
+    padding-right: 40px;
+}
+
+.testimonial-content img {
+    width: 100px; 
+    height: auto;
+    margin-bottom: 15px; /* Tạo khoảng cách giữa icon và tên sinh viên */
+    display: block;
+}
+
+.quote-icon {
+    margin-bottom: 15px;
+    opacity: 0.9; 
+}
+
+.quote-icon img {
+    width: 50px; 
+    height: auto;
+    display: block;
+}
+
+.testimonial-content h3 {
+    font-size: 28px;
+    color: #0d4e3b;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.student-review {
+    font-size: 16px;
+    color: #555;
+    line-height: 1.8;
+    font-style: italic;
+}
+
+.testimonial-image-box {
+    flex: 2; 
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-wrapper {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    border: 8px solid #fff; 
+    box-shadow: 0 10px 20px rgba(45, 122, 78, 0.2);
+    overflow: hidden;
+    background: #fff; 
+}
+
+.student-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+}
+
+.nav-arrow {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: none;
+    background-color: #2d7a4e; 
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(45, 122, 78, 0.3);
+    flex-shrink: 0;
+}
+
+.nav-arrow:hover {
+    background-color: #1a472a;
+    transform: scale(1.1);
+}
+
+.testimonial-dots {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 40px;
+}
+
+.dot {
+    width: 9px;
+    height: 9px;
+    background-color: #d1e7dd;
+    border-radius: 70%;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.dot.active, .dot:hover {
+    background-color: #2d7a4e;
+    transform: scale(1.2);
+}
