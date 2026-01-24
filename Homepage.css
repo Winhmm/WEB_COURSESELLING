@@ -27,6 +27,59 @@ ul {
     list-style: none; /* Xóa các chấm tròn của các list <ul> */
 }
 
+/* ===== CSS VARIABLES - THÊM VÀO ĐẦU FILE (sau phần RESET) ===== */
+:root {
+    /* Primary Colors */
+    --color-primary: #2d7a4e;
+    --color-primary-dark: #1a472a;
+    --color-primary-darker: #0d4e3b;
+    --color-primary-darker-alt: #0a4b38;
+    --color-primary-light: #d8ebe4;
+    --color-primary-lighter: #e0f2f1;
+    --color-primary-lightest: #e8f5e9;
+    
+    /* Card Colors */
+    --color-card-blue: #E0F2F1;
+    --color-card-beige: #FFF9C4;
+    --color-card-pink: #FDE2E4;
+    --color-card-default: #eaf6f6;
+    
+    /* UI Colors */
+    --color-danger: #ef4444;
+    --color-danger-hover: #dc2626;
+    --color-white: #ffffff;
+    
+    /* Text Colors */
+    --color-text: #333;
+    --color-text-light: #666;
+    --color-text-lighter: #555;
+    --color-text-lightest: #4a4a4a;
+    
+    /* Background Colors */
+    --color-bg-light: #f8f9fa;
+    --color-bg-lighter: #e9ecef;
+    --color-bg-white: #fff;
+    --color-bg-gray: #f5f5f5;
+    
+    /* Shadows */
+    --shadow-sm: 0 2px 5px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 5px 15px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.05);
+    --shadow-xl: 0 15px 40px rgba(0, 0, 0, 0.1);
+    --shadow-xxl: 0 20px 40px rgba(0, 0, 0, 0.1);
+    
+    /* Button Shadows */
+    --shadow-btn: 0 5px rgba(0, 0, 0, 0.2);
+    --shadow-btn-hover: 0 10px 20px rgba(0, 0, 0, 0.2);
+    --shadow-btn-primary: 0 10px 20px rgba(45, 122, 78, 0.3);
+    --shadow-btn-primary-hover: 0 15px 30px rgba(45, 122, 78, 0.5);
+    
+    /* Transitions */
+    --transition-fast: 0.3s;
+    --transition-slow: 1s;
+}
+
+
 /* ===== CONTAINER ===== */
 .container {
     max-width: 1250px; /* Giới hạn chiều rộng */
@@ -252,6 +305,32 @@ header {
     animation: highlightExpand 2s infinite ease-in-out;
 }
 
+/* Container cho các icon bay */
+.hero .container {
+    position: relative; /* Để định vị các icon con */
+}
+
+.float-icon {
+    position: absolute;
+    width: 60px; /* Kích thước icon */
+    opacity: 0.55; /* Làm mờ để không rối mắt */
+    z-index: 0; /* Nằm dưới nội dung chính */
+    animation: floating 6s ease-in-out infinite;
+}
+
+/* Định vị từng icon ở các góc khác nhau */
+.icon-1 { top: 10%; left: 5%; animation-delay: 0s; width: 70px; } /* Góc trái trên */
+.icon-2 { top: 20%; right: 10%; animation-delay: 1s; width: 80px; } /* Góc phải trên */
+.icon-3 { bottom: 10%; left: 15%; animation-delay: 2s; } /* Góc trái dưới */
+.icon-4 { bottom: 20%; right: 5%; animation-delay: 3s; width: 50px; } /* Góc phải dưới */
+
+/* Hiệu ứng bay lên xuống */
+@keyframes floating {
+    0% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(10deg); }
+    100% { transform: translateY(0px) rotate(0deg); }
+}
+
 .title-decoration {
     display: flex;
     justify-content: center;
@@ -375,6 +454,7 @@ header {
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 4px 10px rgba(45, 122, 78, 0.2);
+    
 }
 
 .lang-item {
@@ -617,29 +697,31 @@ header {
     width: 100%;
 }
 
-/* Cập nhật lại .testimonial-card */
 .testimonial-card {
     background-color: #eaf6f6; 
     border-radius: 30px;
     padding: 50px;
-    display: flex; /* Thay đổi từ display: none */
+    display: flex; 
     align-items: center;
-    min-width: 100%; /* Thay đổi từ max-width */
+    min-width: 100%; 
     box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-    transition: box-shadow 0.3s ease;
+    transition: all 0.3s ease;
     flex-shrink: 0; /* Ngăn card bị co lại */
 }
 
-.testimonial-card.card-blue {
-    background-color: #E0F2F1 !important;
+.card-blue,
+.testimonial-card.card-blue { 
+    background-color: #E0F2F1 !important; 
 }
 
-.testimonial-card.card-beige {
-    background-color: #FFF9C4 !important;
+.card-beige,
+.testimonial-card.card-beige { 
+    background-color: #FFF9C4 !important; 
 }
 
-.testimonial-card.card-pink {
-    background-color: #FDE2E4 !important;
+.card-pink,
+.testimonial-card.card-pink { 
+    background-color: #FDE2E4 !important; 
 }
 
 .testimonial-card:hover {
@@ -748,4 +830,379 @@ header {
 .dot.active, .dot:hover {
     background-color: #2d7a4e;
     transform: scale(1.2);
+}
+
+/* ===== ZALO FLOATING BUTTON ===== */
+.zalo-btn {
+    position: fixed; /* Cố định khi cuộn trang */
+    bottom: 30px; /* Cách đáy màn hình */
+    right: 30px; /* Cách lề phải */
+    z-index: 9999; /* Luôn nổi lên trên cùng */
+
+    width: 60px; /* Kích thước nút */
+    height: 60px;
+    border-radius: 50%;
+
+    background-color: #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+
+    /* Hiệu ứng tỏa sáng */
+    animation: zaloPulse 2s infinite; 
+    transition: transform 0.3s ease;
+}
+
+.zalo-btn img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.zalo-btn:hover {
+    transform: scale(1.1); 
+}
+
+/* Tạo animation sóng lan tỏa màu xanh */
+@keyframes zaloPulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(0, 104, 255, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 20px rgba(0, 104, 255, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(0, 104, 255, 0);
+    }
+}
+
+/* ===== FORM ĐĂNG KÝ TƯ VẤN (STYLE XANH ĐẬM) ===== */
+.consultation-section {
+    padding: 80px 0;
+    background: #fff;
+}
+
+.consult-box {
+    background-color: #2d7a4e; /* Màu xanh đậm giống hình */
+    border-radius: 20px;
+    padding: 60px;
+    position: relative;
+    overflow: hidden;
+    color: white;
+    /* Tạo cái đuôi nhọn bên dưới góc trái giống hình */
+    border-bottom-left-radius: 0; 
+    margin-top: -150px;
+}
+
+/* Tạo cái đuôi nhọn giả lập bong bóng chat */
+.consult-box::after {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    left: 0;
+    width: 40px;
+    height: 40px;
+    background-color: #2d7a4e;
+    clip-path: polygon(0 0, 100% 0, 0 100%); /* Cắt hình tam giác */
+}
+
+/* Background trang trí mờ mờ bên phải */
+.consult-bg-decor {
+    position: absolute;
+    top: 20px;
+    right: -50px;
+    width: 300px;
+    height: 300px;
+    border: 20px solid rgba(255, 255, 255, 0.05);
+    border-radius: 50% 50% 0 50%;
+    transform: rotate(-10deg);
+    pointer-events: none;
+}
+
+.consult-content {
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.consult-content h2 {
+    font-size: 38px;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.consult-content .sub-text {
+    font-size: 16px;
+    opacity: 0.9;
+    margin-bottom: 40px;
+    line-height: 1.5;
+    max-width: 600px;
+}
+
+/* Style cho form điền vào chỗ trống */
+.mad-lib-form {
+    font-size: 20px; /* Chữ to rõ */
+    line-height: 2.5;
+    font-weight: 500;
+}
+
+.form-group-inline {
+    display: inline; /* Để các input nằm cùng dòng với chữ */
+}
+
+.mad-lib-form input,
+.mad-lib-form select {
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.6);
+    color: white; 
+    font-size: 20px;
+    padding: 5px 10px;
+    outline: none;
+    transition: all 0.3s;
+    font-weight: bold;
+    font-family: inherit;
+    min-width: 200px;
+}
+
+.mad-lib-form select option {
+    background-color: white; /* Nền trắng cho danh sách xổ xuống */
+    color: black;            /* Chữ màu đen dễ đọc */
+    font-size: 16px;
+    padding: 10px;
+}
+
+.mad-lib-form input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: normal;
+}
+
+.mad-lib-form input:focus,
+.mad-lib-form select:focus {
+    border-bottom-color: #fff;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.mad-lib-form select {
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.mad-lib-form input:-webkit-autofill,
+.mad-lib-form input:-webkit-autofill:hover,
+.mad-lib-form input:-webkit-autofill:focus,
+.mad-lib-form input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px #2d7a4e inset !important;
+    -webkit-text-fill-color: white !important;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.6) !important;
+}
+
+.btn-submit-consult {
+    background-color: #ef4444; /* Màu đỏ */
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 8px;
+    margin-top: 35px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.btn-submit-consult:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    background-color: #dc2626;
+}
+
+@keyframes spin {
+    0% { 
+        transform: rotate(0deg); 
+    }
+    100% { 
+        transform: rotate(360deg); 
+    }
+}
+
+/* Loading button state */
+.btn-loading {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.spinner {
+    animation: spin 1s linear infinite;
+}
+
+/* Disabled button styles */
+.btn-submit-consult:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    background-color: #9ca3af;
+}
+
+.btn-submit-consult:disabled:hover {
+    transform: translateY(0);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    background-color: #9ca3af;
+}
+
+/* ===== SMOOTH SCROLL ===== */
+html {
+    scroll-behavior: smooth;
+}
+
+/* ===== RESPONSIVE IMPROVEMENTS ===== */
+@media (max-width: 768px) {
+    /* Stack testimonial content vertically on mobile */
+    .testimonial-card {
+        flex-direction: column;
+        padding: 30px 20px;
+    }
+    
+    .testimonial-content {
+        padding-right: 0;
+        margin-bottom: 30px;
+    }
+    
+    .image-wrapper {
+        width: 200px;
+        height: 200px;
+    }
+    
+    /* Stack feature cards vertically */
+    .features-grid {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    /* Adjust hero title */
+    .hero h1 {
+        font-size: 32px;
+    }
+    
+    /* Adjust section headers */
+    .section-header h2,
+    .testimonial-header h2 {
+        font-size: 28px;
+    }
+    
+    /* Hide language switch on very small screens */
+    .hero-lang-switch {
+        display: none;
+    }
+    
+    /* Adjust form inputs */
+    .mad-lib-form input {
+        min-width: 150px;
+        font-size: 16px;
+    }
+    
+    .mad-lib-form {
+        font-size: 18px;
+    }
+    
+    /* Navigation arrows smaller */
+    .nav-arrow {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Even smaller adjustments */
+    .teacher-card {
+        width: 100%;
+        padding: 30px 20px;
+    }
+    
+    .teacher-image img {
+        width: 180px;
+        height: 180px;
+    }
+    
+    .consult-box {
+        padding: 40px 20px;
+    }
+    
+    .btn-submit-consult {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* ===== ACCESSIBILITY IMPROVEMENTS ===== */
+
+/* Focus styles cho keyboard navigation */
+a:focus,
+button:focus,
+input:focus,
+select:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/* Skip to main content link (ẩn nhưng visible cho screen readers) */
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--color-primary);
+    color: white;
+    padding: 8px;
+    text-decoration: none;
+    z-index: 100;
+}
+
+.skip-link:focus {
+    top: 0;
+}
+
+@media (prefers-contrast: high) {
+    .nav-menu > li > a::after {
+        height: 3px;
+    }
+    
+    .btn {
+        border-width: 3px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    html {
+        scroll-behavior: auto;
+    }
+}
+
+/* Print styles */
+@media print {
+    header,
+    .hero-lang-switch,
+    .auth-buttons,
+    .zalo-btn,
+    .nav-arrow,
+    .testimonial-dots {
+        display: none;
+    }
+    
+    .container {
+        max-width: 100%;
+    }
 }

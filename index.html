@@ -17,7 +17,7 @@
             <div class="container"> <!-- <div> là cái hộp để bọc lại, .container tí sẽ được CSS điều chỉnh thông qua class -->
                 <div class="nav-wrapper">
                     <div class="logo"> <!-- Bọc logo -->
-                        <img> <!---->                    
+                        <!-- <img src="logo.png" alt="WDSA Logo"> -->
                     </div>
 
                     <ul class="nav-menu"> <!-- Danh sách không thứ tự, có <li> là các item -->
@@ -68,6 +68,13 @@
 
     <section class="hero" id="home">
         <div class="container">
+
+            <div class="hero-decor-icons">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" class="float-icon icon-1" alt="cpp">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" class="float-icon icon-2" alt="java">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" class="float-icon icon-3" alt="sql">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" class="float-icon icon-4" alt="python">
+            </div>
 
             <div class="hero-lang-switch">
                 <a href="#" class="lang-item active">EN</a>
@@ -146,7 +153,7 @@
    <section class="testimonials-section" id="testimonials">
         <div class="container">
             <div class="testimonial-header">
-                <h2>Highly Rated by Thousands of Students</h2>
+                <h2>Highly Rated by Students</h2>
             </div>
 
             <div class="testimonial-wrapper">
@@ -191,7 +198,7 @@
                                     In addition, Phong's enthusiasm and dedication, reflected through his interactive teaching style and clear communication, became a strong source of motivation that encouraged me to overcome this challenging subject. The exercises are diverse, and all instructional videos are carefully recorded during the lessons, allowing students to review their work, identify mistakes, and reflect on areas for improvement. This also makes it easier to ask questions and receive further guidance from the instructor.
                                     <br>
                                     <br>
-                                    Thanks very much my mentor.""
+                                    Thanks very much for my mentor."
                                 </p>
                             </div>
                             <div class="testimonial-image-box">
@@ -237,48 +244,68 @@
         </div>
     </section>
 
-    <script>
-        let slideIndex = 0;
-        showSlides(slideIndex);
-
-        function changeSlide(n) {
-            slideIndex += n;
-            showSlides(slideIndex);
-        }
-
-        function currentSlide(n) {
-            slideIndex = n - 1;
-            showSlides(slideIndex);
-        }
-
-        function showSlides(n) {
-            const track = document.querySelector('.slider-track');
-            const slides = document.getElementsByClassName("testimonial-card");
-            const dots = document.getElementsByClassName("dot");
-
-            // Xử lý vòng lặp khi đến slide cuối/đầu
-            if (n >= slides.length) { 
-                slideIndex = 0;
-            }    
-            if (n < 0) { 
-                slideIndex = slides.length - 1;
-            }
-            
-            // Tính toán vị trí trượt (mỗi slide chiếm 100% width)
-            const translateValue = -(slideIndex * 100);
-            track.style.transform = `translateX(${translateValue}%)`;
-            
-            // Cập nhật trạng thái active cho dots
-            for (let i = 0; i < dots.length; i++) {
-                dots[i].classList.remove("active");
-            }
-            
-            if (dots[slideIndex]) {
-                dots[slideIndex].classList.add("active");
-            }
-        }
-    </script>
+        <a href="https://zalo.me/0356388642" target="_blank" class="zalo-btn">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Icon_of_Zalo.svg/1200px-Icon_of_Zalo.svg.png" alt="Chat Zalo">
+        </a>
     
+        <section class="consultation-section" id="register">
+            <div class="container">
+                <div class="consult-box">
+                    <div class="consult-bg-decor"></div>
+
+                    <div class="consult-content">
+                        <h2>Register for Free Consultation</h2>
+                        <p class="sub-text">Build a COMPREHENSIVE learning path by registering via this form or contacting us directly via email or phone below.</p>
+                        <form class="mad-lib-form">
+                            <div class="form-group-inline">
+                                <span>My name is</span>
+                                <input type="text" name="fullname" placeholder="Nguyen Van A" required aria-label="Your name">
+                            </div>
+
+                            <br>
+
+                            <div class="form-group-inline">
+                                <span>I want to learn</span>
+                                <select name="course" required aria-label="Course selection">
+                                    <option value="Data Structures & Algorithms">Data Structures & Algorithms</option>
+                                    <option value="C++ Fundamentals">C++ Fundamentals</option>
+                                    <option value="Java OOP">Java OOP</option>
+                                    <option value="Database Systems">Database Systems</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+
+                            <br>
+
+                            <div class="form-group-inline">
+                                <span>Contact me via</span>
+                                <input type="tel" name="phone" placeholder="+84 123 456 789" aria-label="Phone number">
+                                <span>or</span>
+                                <input type="email" name="email" placeholder="example@email.com" aria-label="Email address">
+                            </div>
+
+                            <div class="form-footer">
+                                <button type="submit" class="btn-submit-consult" id="submitBtn">
+                                    <span class="btn-text">Register Now</span>
+                                    <span class="btn-loading" style="display: none;">
+                                        <svg class="spinner" width="20" height="20" viewBox="0 0 24 24">
+                                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" fill="none" opacity="0.25"/>
+                                                <path d="M12 2a10 10 0 0 1 10 10" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round"/>
+                                        </svg>
+                                        Sending...
+                                    </span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M5 12h14"/><path d="M12 5l7 7-7 7"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    <script src="Homepage.js" defer></script>
 
 </body>
 
