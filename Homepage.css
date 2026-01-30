@@ -121,14 +121,20 @@ header {
     align-items: center; /* Đảm bảo Logo và menu thẳng hàng nhau */
 }
 
-.logo img {
-    height: 50px; /* Kích thước ảnh */
+.logo {
+    position: absolute; /* Thoát ly khỏi container */
+    left: 90px;
+    top: 50%;           /* Canh giữa theo chiều dọc */
+    transform: translateY(-50%); 
+    z-index: 10;
+    text-align: center;
 }
 
 .nav-menu {
     display: flex; /* Flexbox dàn ngang cho Home, Curriculum, Insights */ 
     gap: 30px; /* Khoảng cách giữa nhau là 30 */
     align-items: center; /* Luôn nằm giữa thanh Header */
+    margin-left: 100px;
 }
 
 .nav-menu > li {
@@ -210,7 +216,7 @@ header {
 .auth-buttons {
     display: flex; /* Xếp 2 nút nằm ngang nhau */
     gap: 10px; /* Tạo khoảng cách giữa 2 nút là 10px */
-    margin-left: auto;
+    margin-right: -100px;
 }
 
 .btn {
@@ -346,6 +352,104 @@ header {
     100% { transform: translateY(0px) rotate(0deg); }
 }
 
+/* 1. Định nghĩa Animation trượt xuống khi mới mở web */
+@keyframes slideDownFade {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.hero-search-bar {
+    position: absolute; /* Tách ra khỏi dòng chảy văn bản */
+    top: -60px;           /* Nằm sát mép trên của phần Hero */
+    right: 20px;        /* Canh lề phải (thẳng hàng với nút bấm trên header) */
+    z-index: 10;        /* Nổi lên trên các icon bay bay */
+    
+    /* Kích thước */
+    width: 350px;       
+    background: white;
+    border-radius: 30px;
+    margin-right: -100px;
+   
+    /* Animation 1: Đổ bóng nhẹ ban đầu */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    
+    /* Animation 2: Hiệu ứng chuyển động mượt mà (0.4s) */
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    
+    /* Animation 3: Chạy hiệu ứng trượt xuống khi load trang */
+    animation: slideDownFade 0.8s ease-out forwards;
+}
+
+.hero-search-bar:focus-within {
+    width: 420px; /* 1. Dài ra thêm */
+    top: -65px;   /* 2. Bay nhẹ lên trên 5px */
+    
+    /* 3. Đổ bóng màu xanh (Glow effect) */
+    box-shadow: 0 15px 35px rgba(45, 122, 78, 0.25);
+    border: 1px solid rgba(45, 122, 78, 0.3);
+}
+
+/* 2. Trang trí ô nhập liệu */
+.hero-search-bar .search-input {
+    width: 100%;
+    padding: 12px 45px 12px 25px;
+    border: 1px solid transparent; /* Ẩn viền input đi để dùng viền của thẻ cha */
+    border-radius: 30px;
+    font-size: 15px;
+    outline: none;
+    background: transparent;
+    color: #333 !important;
+    transition: all 0.3s;
+}
+
+/* Hiệu ứng khi click vào */
+.hero-search-bar .search-input:focus {
+    border-color: #2d7a4e;
+}
+
+/* 3. Trang trí nút icon kính lúp */
+.hero-search-bar .search-btn {
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    /* Canh giữa và giữ tỉ lệ */
+    transform: translateY(-50%); 
+    
+    border: none;
+    background: #2d7a4e;
+    color: white;
+    width: 38px;  
+    height: 38px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    /* Hiệu ứng mượt cho nút */
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 4px 10px rgba(45, 122, 78, 0.3)
+}
+
+.hero-search-bar .search-btn:hover {
+    background: #1a472a;
+    transform: translateY(-50%) scale(1.15) rotate(10deg); /* Phóng to và xoay nhẹ */
+    box-shadow: 0 6px 15px rgba(45, 122, 78, 0.5);
+}
+
+/* 4. Mobile: Ẩn đi vì màn hình nhỏ không đủ chỗ */
+@media (max-width: 991px) {
+    .hero-search-bar {
+        display: none;
+    }
+}
+
 .title-decoration {
     display: flex;
     justify-content: center;
@@ -453,6 +557,7 @@ header {
     border-radius: 30px;
     font-size: 15px;
     font-weight: bold;
+    margin-top: -2px;
 }
 
 .badge-score {
@@ -502,8 +607,6 @@ header {
     
 }
 
-
-
 .lang-item {
     font-size: 13px;
     font-weight: bold;
@@ -521,26 +624,6 @@ header {
     color: #fff;
     font-weight: bold;
 }
-
-.hero-lang-switch:hover {
-    background: #fff;
-    border-color: #fff;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
-    transform: translateY(-3px);
-}
-
-.hero-lang-switch:hover .lang-item {
-    color: #999;
-}
-
-.hero-lang-switch:hover .lang-item.active {
-    color: #2d7a4e;
-}
-
-.hero-lang-switch:hover .sep {
-    color: #ddd;
-}
-
 
 /* ===== INFO BANNER ===== */
 .info-banner {
@@ -1097,9 +1180,16 @@ header {
 .mad-lib-form input:-webkit-autofill:hover,
 .mad-lib-form input:-webkit-autofill:focus,
 .mad-lib-form input:-webkit-autofill:active {
-    -webkit-box-shadow: 0 0 0 30px #2d7a4e inset !important;
-    -webkit-text-fill-color: white !important;
+    -webkit-box-shadow: 0 0 0 1000px #2d7a4e inset !important;
+    -webkit-text-fill-color: #ffffff !important;
     border-bottom: 2px solid rgba(255, 255, 255, 0.6) !important;
+    font-size: 20px !important;
+    font-weight: bold !important;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+.mad-lib-form input {
+    caret-color: #ffffff;
 }
 
 .btn-submit-consult {
@@ -1268,7 +1358,7 @@ html {
 .footer-logo {
     font-size: 32px;
     font-weight: 800;
-    color: #1a472a; /* Màu xanh đậm */
+    color: black; /* Màu xanh đậm */
     margin-bottom: 20px;
     letter-spacing: -1px;
 }
@@ -1426,7 +1516,22 @@ select:focus {
 /* ================================================= */
 /* MOBILE RESPONSIVE (Chỉ áp dụng cho mobile.html) */
 /* ================================================= */
+.menu-toggle, .mobile-auth { 
+    display: none; 
+}
 
+/* Style cho hamburger bars */
+.menu-toggle .bar {
+    width: 25px;
+    height: 3px;
+    background-color: #1a472a;
+    margin: 5px 0;
+    transition: all 0.3s ease;
+    display: block;
+    border-radius: 3px;
+}
+
+/* Kích thước màn hình dưới 991px (Tablet & Mobile) */
 @media (max-width: 991px) {
     /* 1. SETUP MENU HAMBURGER */
     .menu-toggle {
@@ -1437,12 +1542,15 @@ select:focus {
         z-index: 1002;
     }
 
-    .menu-toggle .bar {
-        width: 25px;
-        height: 3px;
-        background-color: #333;
-        border-radius: 3px;
-        transition: all 0.3s ease;
+    /* THÊM HIỆU ỨNG XOAY THÀNH DẤU X KHI CLICK */
+    .menu-toggle.active .bar:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+    .menu-toggle.active .bar:nth-child(2) {
+        opacity: 0;
+    }
+    .menu-toggle.active .bar:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
     }
 
     /* Menu trượt từ phải sang */
@@ -1468,12 +1576,16 @@ select:focus {
     }
 
     /* Ẩn nút auth cũ trên thanh header, hiện trong menu */
-    .desktop-auth { display: none !important; }
+    .desktop-auth { 
+        display: none !important; 
+    }
     
     .mobile-auth { 
         display: block !important; 
         width: 100%; 
         margin-top: 20px; 
+        border-top: 1px solid #eee;
+        padding-top: 20px;
     }
     
     .mobile-auth .btn {
@@ -1493,6 +1605,7 @@ select:focus {
         background: #f9f9f9;
         visibility: visible;
         opacity: 1;
+        transition: none;
     }
     
     .nav-menu li:hover .dropdown-menu,

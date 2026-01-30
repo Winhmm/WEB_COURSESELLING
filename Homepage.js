@@ -164,7 +164,7 @@ document.addEventListener("DOMContentLoaded", function () {
             this.classList.add("active");
             
             const selectedLang = this.textContent.trim();
-            console.log(`🌐 Language switched to: ${selectedLang}`);
+            console.log(`🌍 Language switched to: ${selectedLang}`);
         });
     });
 
@@ -182,51 +182,8 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    console.log("✅ WDSA Website loaded successfully!");
-});
-
-window.addEventListener("scroll", function() {
-    const header = document.querySelector("header");
-    header.classList.toggle("scrolled", window.scrollY > 50);
-});
-
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add("active");
-        }
-    });
-}, { threshold: 0.1 });
-
-
-// Chọn tất cả các phần tử cần hiệu ứng
-const animatedElements = document.querySelectorAll(".feature-card, .teacher-card, .section-header");
-
-animatedElements.forEach(el => {
-    // Đảm bảo class reveal luôn có (phòng trường hợp quên thêm ở HTML)
-    el.classList.add("reveal"); 
-    
-    // Bắt đầu theo dõi
-    observer.observe(el);
-});
-
-
-// Hiệu ứng Parallax: Icon di chuyển ngược hướng chuột
-document.addEventListener("mousemove", (e) => {
-    const icons = document.querySelectorAll(".float-icon");
-    // Lấy tọa độ chuột
-    const x = (window.innerWidth - e.pageX * 2) / 100;
-    const y = (window.innerHeight - e.pageY * 2) / 100;
-
-    icons.forEach((icon, index) => {
-        // Mỗi icon di chuyển với tốc độ khác nhau dựa trên index
-        const speed = (index + 1) * 0.5;
-        // Sử dụng translate để di chuyển
-        icon.style.transform = `translateX(${x * speed}px) translateY(${y * speed}px)`;
-    });
-
-   // ==========================================
-    // VIEW MODE SWITCHER (MOBILE <-> PC)
+    // ==========================================
+    // VIEW MODE SWITCHER (MOBILE <-> PC) - FIXED POSITION
     // ==========================================
     const viewSwitcher = document.getElementById('viewSwitcher');
     
@@ -235,20 +192,92 @@ document.addEventListener("mousemove", (e) => {
             e.preventDefault();
             
             const currentPath = window.location.pathname;
-            // Kiểm tra xem đang ở file nào (đơn giản hơn)
             const isMobilePage = currentPath.includes('mobile.html');
 
-            // Lưu trạng thái vào bộ nhớ
             if (isMobilePage) {
                 localStorage.setItem('prefer_mode', 'pc');
-                // XÓA DÒNG ALERT Ở ĐÂY -> Chuyển hướng luôn
                 window.location.href = 'index.html';
             } else {
                 localStorage.setItem('prefer_mode', 'mobile');
-                // XÓA DÒNG ALERT Ở ĐÂY -> Chuyển hướng luôn
                 window.location.href = 'mobile.html';
             }
         });
     }
+
+    // ==========================================
+    // MOBILE MENU TOGGLE - IMPROVED VERSION
+    // ==========================================
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navMenu = document.querySelector('.nav-menu');
+    
+    if (menuToggle && navMenu) {
+        // Toggle menu khi click vào hamburger
+        menuToggle.addEventListener('click', function(e) {
+            e.stopPropagation(); // Ngăn event bubble lên document
+            navMenu.classList.toggle('active');
+            menuToggle.classList.toggle('active');
+        });
+
+        // Đóng menu khi click vào nav links
+        const navItems = navMenu.querySelectorAll('a');
+        navItems.forEach(item => {
+            item.addEventListener('click', function() {
+                navMenu.classList.remove('active');
+                menuToggle.classList.remove('active');
+            });
+        });
+
+        // Đóng menu khi click bên ngoài
+        document.addEventListener('click', function(e) {
+            if (!navMenu.contains(e.target) && !menuToggle.contains(e.target)) {
+                navMenu.classList.remove('active');
+                menuToggle.classList.remove('active');
+            }
+        });
+    }
+
+    console.log("✅ WDSA Website loaded successfully!");
 });
 
+// ==========================================
+// SCROLL HEADER EFFECT
+// ==========================================
+window.addEventListener("scroll", function() {
+    const header = document.querySelector("header");
+    if (header) {
+        header.classList.toggle("scrolled", window.scrollY > 50);
+    }
+});
+
+// ==========================================
+// INTERSECTION OBSERVER FOR ANIMATIONS
+// ==========================================
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add("active");
+        }
+    });
+}, { threshold: 0.1 });
+
+// Chọn tất cả các phần tử cần hiệu ứng
+const animatedElements = document.querySelectorAll(".feature-card, .teacher-card, .section-header");
+
+animatedElements.forEach(el => {
+    el.classList.add("reveal"); 
+    observer.observe(el);
+});
+
+// ==========================================
+// PARALLAX EFFECT FOR FLOATING ICONS
+// ==========================================
+document.addEventListener("mousemove", (e) => {
+    const icons = document.querySelectorAll(".float-icon");
+    const x = (window.innerWidth - e.pageX * 2) / 100;
+    const y = (window.innerHeight - e.pageY * 2) / 100;
+
+    icons.forEach((icon, index) => {
+        const speed = (index + 1) * 0.5;
+        icon.style.transform = `translateX(${x * speed}px) translateY(${y * speed}px)`;
+    });
+});

@@ -1,31 +1,35 @@
-<!DOCTYPE html> <!-- Loại tài liệu được viết bằng HTML -->
-<html lang="en"> <!-- Có nhiệm vụ đóng gói tất cả những gì của HTML -->
-<head> <!-- Không thấy được trên trình duyệt -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
     <meta name="keywords" content="WDSA, Data Structures, Algorithms, C++, Programming">
     <meta name="description" content="Master Data Structures and Algorithms with C++ at WDSA - Your path to competitive programming excellence.">
     <meta name="author" content="Winhmm">
-    <meta name="viewport" content="width=1280, initial-scale=0.3">
-    <title>WDSA | Master DSA & Programming</title> <!-- Tiêu đề trên tab cho web -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WDSA | Master DSA & Programming</title>
     <link rel="stylesheet" href="Homepage.css">
 </head>
 
-
-<body> <!-- Tất cả những gì hiển thị trong web đều nằm ở body -->
-    <header> <!-- Header dùng để làm phần top của trang web -->
-        <nav class="navbar"> <!-- Chứa các liên kết để di chuyển giữa các trang, CSS sẽ dùng .navbar làm đẹp thông qua class -->
-            <div class="container"> <!-- <div> là cái hộp để bọc lại, .container tí sẽ được CSS điều chỉnh thông qua class -->
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="container">
                 <div class="nav-wrapper">
-                    <div class="logo"> <!-- Bọc logo -->
-                        <!-- <img src="logo.png" alt="WDSA Logo"> -->
+                    <div class="logo">
+                        <a href="#home" style="font-weight: 800; font-size: 24px; color: black; text-decoration: none;">WDSA</a>
                     </div>
 
-                    <ul class="nav-menu"> <!-- Danh sách không thứ tự, có <li> là các item -->
-                        <li><a href="#home">Home</a></li> <!-- Là item trong <ul>, <li> phải đứng trong <ul> -->
+                    <div class="menu-toggle" id="mobile-menu">
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                    </div>
+                    <ul class="nav-menu">
+                        <li><a href="#home">Home</a></li>
                         <li><a href="#about">About Us</a></li>
                         
                         <li class="dropdown">
-                            <a href="#courses" class="dropdown-toggle">Curriculum</a> <!-- <a> dùng để ấn vào chuyển sang trang web khác -->
+                            <a href="#courses" class="dropdown-toggle">Curriculum</a>
                             <ul class="dropdown-menu">
                                 <li><a href="#dsa-course">Data Structures & Algorithms</a></li>
                                 <li><a href="#cpp-fundamentals">C++ Fundamentals</a></li>
@@ -34,9 +38,9 @@
                             </ul>
                         </li>
 
-                        <li class="dropdown"> <!-- Định dạng vị trí trên thanh menu ngang (như cái ví) -->
-                            <a href="#contests" class="dropdown-toggle">Competitive Hub</a> <!-- Cho biết rằng bên trong mục này chứa nhiều mục con -->
-                            <ul class="dropdown-menu"> <!-- Cho xem các item bên trong (tiền) -->
+                        <li class="dropdown">
+                            <a href="#contests" class="dropdown-toggle">Competitive Hub</a>
+                            <ul class="dropdown-menu">
                                 <li><a href="#Leetcode">LeetCode Challenges</a></li>
                                 <li><a href="#GFG">GeeksforGeeks Contests</a></li>
                             </ul>
@@ -65,19 +69,20 @@
         </nav>
     </header>
 
-
     <section class="hero" id="home">
-        <div class="container">
-
-            <div class="hero-decor-icons">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" class="float-icon icon-1" alt="cpp">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" class="float-icon icon-2" alt="java">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" class="float-icon icon-3" alt="sql">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" class="float-icon icon-4" alt="python">
+        <div class="container" style="position: relative;">
+            
+            <div class="hero-search-bar">
+                <input type="text" placeholder="Search courses..." class="search-input">
+                <button class="search-btn">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
             </div>
-
-            <div class="hero-lang-switch" id="viewSwitcher" style="cursor: pointer;">
-                <span class="lang-item active">Mobile View</span>
+            <div class="hero-decor-icons">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" class="float-icon icon-1" alt="cpp">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" class="float-icon icon-2" alt="java">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" class="float-icon icon-3" alt="sql">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" class="float-icon icon-4" alt="python">
             </div>
 
             <div class="hero-content">
@@ -86,12 +91,12 @@
                 <div class="teachers-containers">
                     <div class="teacher-card reveal">
                         <div class="teacher-image">
-                            <img src="PSX_20260122_003317.jpg" alt="Mentor Nguyễn Thanh Phong">
+                            <img src="PSX_20260122_003317.jpg" alt="Mentor Nguyen Thanh Phong" onerror="this.src='https://via.placeholder.com/230'">
                         </div>
                         <div class="teacher-badge">
                             <span class="badge-text">1 Year DSA Mentor</span>
                         </div>
-                        <h3>Nguyễn Thanh Phong</h3>
+                        <h3>Nguyen Thanh Phong</h3>
                         <p>Student at Ho Chi Minh City University of Education</p>
                     </div>
                 </div>
@@ -99,8 +104,7 @@
         </div>
     </section>
 
-
-   <section class="info-banner" id="about">
+    <section class="info-banner" id="about">
         <div class="container">
             <div class="section-header">
                 <h2>Why Choose WDSA?</h2>
@@ -108,7 +112,6 @@
             </div>
 
             <div class="features-grid">
-                
                 <div class="feature-card card-blue">
                     <div class="card-icon">
                         <img src="success.gif" alt="Certificate Icon" width="60">
@@ -138,7 +141,6 @@
                         Being part of a high-achieving peer group pushes you to elevate your own coding standards and consistency. You will engage in deep technical discussions that mimic the rigorous code review processes found in major tech companies. Mentor Nguyen Thanh Phong provides the strategic oversight needed to navigate complex topics, ensuring you understand not just the how, but the why behind every algorithm. This direct access allows you to learn from the successes and mistakes of others, significantly refining your debugging skills. Ultimately, you are building a professional network that will support your career development long after the course ends.
                     </p>
                 </div>
-
             </div>
             
             <div class="cta-container">
@@ -147,8 +149,7 @@
         </div>
     </section>
 
-
-   <section class="testimonials-section" id="testimonials">
+    <section class="testimonials-section" id="testimonials">
         <div class="container">
             <div class="testimonial-header">
                 <h2>Highly Rated by Students</h2>
@@ -167,14 +168,11 @@
                                 <h3>Nguyen Thi Thien Thanh</h3>
                                 <p class="student-review">
                                     "You are a very dedicated instructor, with a teaching style that is detailed and easy to understand. Algorithmic thinking is explained clearly, and each lesson includes specific examples and practice exercises, which help me gain a deeper understanding instead of just learning theory.
-                                    <br>
-                                    <br>
+                                    <br><br>
                                     You always keep track of students' learning progress and are willing to answer questions whenever I do not understand something. The courses, ranging from basic programming to advanced levels and data structures and algorithms, are well-structured and suitable for learners who truly want to improve their programming mindset.
-                                    <br>
-                                    <br>
+                                    <br><br>
                                     After a period of studying, I have noticed clear improvement in myself. Although I am a slow learner, your step-by-step teaching approach, starting from the fundamentals and gradually moving to more advanced topics, has helped me keep up with the lessons and build a solid understanding. I have also become more confident in analyzing problems and applying appropriate solutions when writing code.
-                                    <br>
-                                    <br>
+                                    <br><br>
                                     Thank you for creating a comfortable and friendly learning environment and for helping me make significant progress."
                                 </p>
                             </div>
@@ -190,12 +188,10 @@
                                 <img src="creative.gif" alt="Quote Icon">
                                 <h3>Le Nhat Tri</h3>
                                 <p class="student-review">
-                                    "Data Structures and Algorithms is one of the essential foundations for programmers, where we have to deal with various concepts such as sorting algorithms, linked lists, different types of trees, and more. My journey of learning Data Structures and Algorithms initially felt like hitting a dead end. However, after discovering Nguyễn Thanh Phong's DSA course and experiencing it throughout the entire program, I was able to explore many new approaches and step-by-step methods to expand my logical thinking. As a result, I learned how to solve algorithmic problems that previously took me nearly four to six hours to complete.
-                                    <br>
-                                    <br>
+                                    "Data Structures and Algorithms is one of the essential foundations for programmers, where we have to deal with various concepts such as sorting algorithms, linked lists, different types of trees, and more. My journey of learning Data Structures and Algorithms initially felt like hitting a dead end. However, after discovering Nguyen Thanh Phong's DSA course and experiencing it throughout the entire program, I was able to explore many new approaches and step-by-step methods to expand my logical thinking. As a result, I learned how to solve algorithmic problems that previously took me nearly four to six hours to complete.
+                                    <br><br>
                                     In addition, Phong's enthusiasm and dedication, reflected through his interactive teaching style and clear communication, became a strong source of motivation that encouraged me to overcome this challenging subject. The exercises are diverse, and all instructional videos are carefully recorded during the lessons, allowing students to review their work, identify mistakes, and reflect on areas for improvement. This also makes it easier to ask questions and receive further guidance from the instructor.
-                                    <br>
-                                    <br>
+                                    <br><br>
                                     Thanks very much for my mentor."
                                 </p>
                             </div>
@@ -212,11 +208,9 @@
                                 <h3>Nguyen Duc Tinh</h3>
                                 <p class="student-review">
                                     "After completing the DSA course, I found the teaching approach to be very clear, systematic, and easy to follow. The instructor did not simply focus on showing how to write code, but instead placed strong emphasis on explaining algorithmic thinking and problem-solving strategies. This helped me understand the underlying logic of each problem before starting to code, allowing me to approach programming tasks in a more structured and effective way rather than relying on trial and error.
-                                    <br>
-                                    <br>
+                                    <br><br>
                                     The course curriculum is thoughtfully designed and well-organized, progressing smoothly from basic to more advanced concepts. Fundamental topics such as arrays and sorting algorithms are introduced first to build a solid foundation. These are then followed by more complex data structures, including linked lists, trees, and graphs. Each topic is presented in a logical sequence, with clear explanations and examples that make even challenging concepts easier to understand.
-                                    <br>
-                                    <br>
+                                    <br><br>
                                     Overall, this DSA course has significantly improved my understanding of data structures and algorithms. It has strengthened my logical thinking and helped me approach programming problems more systematically."
                                 </p>
                             </div>
@@ -242,68 +236,68 @@
         </div>
     </section>
 
-        <a href="https://zalo.me/0356388642" target="_blank" class="zalo-btn">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Icon_of_Zalo.svg/1200px-Icon_of_Zalo.svg.png" alt="Chat Zalo">
-        </a>
-    
-        <section class="consultation-section" id="register">
-            <div class="container">
-                <div class="consult-box">
-                    <div class="consult-bg-decor"></div>
+    <a href="https://zalo.me/0356388642" target="_blank" class="zalo-btn">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Icon_of_Zalo.svg/1200px-Icon_of_Zalo.svg.png" alt="Chat Zalo">
+    </a>
 
-                    <div class="consult-content">
-                        <h2>Register for Free Consultation</h2>
-                        <p class="sub-text">Build a COMPREHENSIVE learning path by registering via this form or contacting us directly via email or phone below.</p>
-                        <form class="mad-lib-form">
-                            <div class="form-group-inline">
-                                <span>My name is</span>
-                                <input type="text" name="fullname" placeholder="Nguyen Van A" required aria-label="Your name">
-                            </div>
+    <section class="consultation-section" id="register">
+        <div class="container">
+            <div class="consult-box">
+                <div class="consult-bg-decor"></div>
 
-                            <br>
+                <div class="consult-content">
+                    <h2>Register for Free Consultation</h2>
+                    <p class="sub-text">Build a COMPREHENSIVE learning path by registering via this form or contacting us directly via email or phone below.</p>
+                    <form class="mad-lib-form">
+                        <div class="form-group-inline">
+                            <span>My name is</span>
+                            <input type="text" name="fullname" placeholder="Nguyen Van A" required aria-label="Your name">
+                        </div>
 
-                            <div class="form-group-inline">
-                                <span>I want to learn</span>
-                                <select name="course" required aria-label="Course selection">
-                                    <option value="Data Structures & Algorithms">Data Structures & Algorithms</option>
-                                    <option value="C++ Fundamentals">C++ Fundamentals</option>
-                                    <option value="Java OOP">Java OOP</option>
-                                    <option value="Database Systems">Database Systems</option>
-                                    <option value="Other">Other</option>
-                                </select>
-                            </div>
+                        <br>
 
-                            <br>
+                        <div class="form-group-inline">
+                            <span>I want to learn</span>
+                            <select name="course" required aria-label="Course selection">
+                                <option value="Data Structures & Algorithms">Data Structures & Algorithms</option>
+                                <option value="C++ Fundamentals">C++ Fundamentals</option>
+                                <option value="Java OOP">Java OOP</option>
+                                <option value="Database Systems">Database Systems</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
 
-                            <div class="form-group-inline">
-                                <span>Contact me via</span>
-                                <input type="tel" name="phone" placeholder="+84 123 456 789" aria-label="Phone number">
-                                <span>or</span>
-                                <input type="email" name="email" placeholder="example@email.com" aria-label="Email address">
-                            </div>
+                        <br>
 
-                            <div class="form-footer">
-                                <button type="submit" class="btn-submit-consult" id="submitBtn">
-                                    <span class="btn-text">Register Now</span>
-                                    <span class="btn-loading" style="display: none;">
-                                        <svg class="spinner" width="20" height="20" viewBox="0 0 24 24">
-                                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" fill="none" opacity="0.25"/>
-                                                <path d="M12 2a10 10 0 0 1 10 10" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round"/>
-                                        </svg>
-                                        Sending...
-                                    </span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M5 12h14"/><path d="M12 5l7 7-7 7"/>
+                        <div class="form-group-inline">
+                            <span>Contact me via</span>
+                            <input type="tel" name="phone" placeholder="+84 123 456 789" aria-label="Phone number">
+                            <span>or</span>
+                            <input type="email" name="email" placeholder="example@email.com" aria-label="Email address">
+                        </div>
+
+                        <div class="form-footer">
+                            <button type="submit" class="btn-submit-consult" id="submitBtn">
+                                <span class="btn-text">Register Now</span>
+                                <span class="btn-loading" style="display: none;">
+                                    <svg class="spinner" width="20" height="20" viewBox="0 0 24 24">
+                                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" fill="none" opacity="0.25"/>
+                                        <path d="M12 2a10 10 0 0 1 10 10" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round"/>
                                     </svg>
-                                </button>
-                            </div>
-                        </form>
-                    </div>
+                                    Sending...
+                                </span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M5 12h14"/><path d="M12 5l7 7-7 7"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <footer class="site-footer">
+    <footer class="site-footer">
         <div class="container">
             <div class="footer-top">
                 <div class="footer-brand">
@@ -367,41 +361,30 @@
 
                 <div class="social-icons">
                     <a href="https://www.facebook.com/wind24hmm" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free v7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path d="M576 320C576 178.6 461.4 64 320 64C178.6 64 64 178.6 64 320C64 440 146.7 540.8 258.2 568.5L258.2 398.2L205.4 398.2L205.4 320L258.2 320L258.2 286.3C258.2 199.2 297.6 158.8 383.2 158.8C399.4 158.8 427.4 162 438.9 165.2L438.9 236C432.9 235.4 422.4 235 409.3 235C367.3 235 351.1 250.9 351.1 292.2L351.1 320L434.7 320L420.3 398.2L351 398.2L351 574.1C477.8 558.8 576 450.9 576 320z"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M576 320C576 178.6 461.4 64 320 64C178.6 64 64 178.6 64 320C64 440 146.7 540.8 258.2 568.5L258.2 398.2L205.4 398.2L205.4 320L258.2 320L258.2 286.3C258.2 199.2 297.6 158.8 383.2 158.8C399.4 158.8 427.4 162 438.9 165.2L438.9 236C432.9 235.4 422.4 235 409.3 235C367.3 235 351.1 250.9 351.1 292.2L351.1 320L434.7 320L420.3 398.2L351 398.2L351 574.1C477.8 558.8 576 450.9 576 320z"/></svg>
+                    </a>
                     <a href="https://www.instagram.com/w24hmm/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free v7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path d="M320.3 205C256.8 204.8 205.2 256.2 205 319.7C204.8 383.2 256.2 434.8 319.7 435C383.2 435.2 434.8 383.8 435 320.3C435.2 256.8 383.8 205.2 320.3 205zM319.7 245.4C360.9 245.2 394.4 278.5 394.6 319.7C394.8 360.9 361.5 394.4 320.3 394.6C279.1 394.8 245.6 361.5 245.4 320.3C245.2 279.1 278.5 245.6 319.7 245.4zM413.1 200.3C413.1 185.5 425.1 173.5 439.9 173.5C454.7 173.5 466.7 185.5 466.7 200.3C466.7 215.1 454.7 227.1 439.9 227.1C425.1 227.1 413.1 215.1 413.1 200.3zM542.8 227.5C541.1 191.6 532.9 159.8 506.6 133.6C480.4 107.4 448.6 99.2 412.7 97.4C375.7 95.3 264.8 95.3 227.8 97.4C192 99.1 160.2 107.3 133.9 133.5C107.6 159.7 99.5 191.5 97.7 227.4C95.6 264.4 95.6 375.3 97.7 412.3C99.4 448.2 107.6 480 133.9 506.2C160.2 532.4 191.9 540.6 227.8 542.4C264.8 544.5 375.7 544.5 412.7 542.4C448.6 540.7 480.4 532.5 506.6 506.2C532.8 480 541 448.2 542.8 412.3C544.9 375.3 544.9 264.5 542.8 227.5zM495 452C487.2 471.6 472.1 486.7 452.4 494.6C422.9 506.3 352.9 503.6 320.3 503.6C287.7 503.6 217.6 506.2 188.2 494.6C168.6 486.8 153.5 471.7 145.6 452C133.9 422.5 136.6 352.5 136.6 319.9C136.6 287.3 134 217.2 145.6 187.8C153.4 168.2 168.5 153.1 188.2 145.2C217.7 133.5 287.7 136.2 320.3 136.2C352.9 136.2 423 133.6 452.4 145.2C472 153 487.1 168.1 495 187.8C506.7 217.3 504 287.3 504 319.9C504 352.5 506.7 422.6 495 452z"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M320.3 205C256.8 204.8 205.2 256.2 205 319.7C204.8 383.2 256.2 434.8 319.7 435C383.2 435.2 434.8 383.8 435 320.3C435.2 256.8 383.8 205.2 320.3 205zM319.7 245.4C360.9 245.2 394.4 278.5 394.6 319.7C394.8 360.9 361.5 394.4 320.3 394.6C279.1 394.8 245.6 361.5 245.4 320.3C245.2 279.1 278.5 245.6 319.7 245.4zM413.1 200.3C413.1 185.5 425.1 173.5 439.9 173.5C454.7 173.5 466.7 185.5 466.7 200.3C466.7 215.1 454.7 227.1 439.9 227.1C425.1 227.1 413.1 215.1 413.1 200.3zM542.8 227.5C541.1 191.6 532.9 159.8 506.6 133.6C480.4 107.4 448.6 99.2 412.7 97.4C375.7 95.3 264.8 95.3 227.8 97.4C192 99.1 160.2 107.3 133.9 133.5C107.6 159.7 99.5 191.5 97.7 227.4C95.6 264.4 95.6 375.3 97.7 412.3C99.4 448.2 107.6 480 133.9 506.2C160.2 532.4 191.9 540.6 227.8 542.4C264.8 544.5 375.7 544.5 412.7 542.4C448.6 540.7 480.4 532.5 506.6 506.2C532.8 480 541 448.2 542.8 412.3C544.9 375.3 544.9 264.5 542.8 227.5zM495 452C487.2 471.6 472.1 486.7 452.4 494.6C422.9 506.3 352.9 503.6 320.3 503.6C287.7 503.6 217.6 506.2 188.2 494.6C168.6 486.8 153.5 471.7 145.6 452C133.9 422.5 136.6 352.5 136.6 319.9C136.6 287.3 134 217.2 145.6 187.8C153.4 168.2 168.5 153.1 188.2 145.2C217.7 133.5 287.7 136.2 320.3 136.2C352.9 136.2 423 133.6 452.4 145.2C472 153 487.1 168.1 495 187.8C506.7 217.3 504 287.3 504 319.9C504 352.5 506.7 422.6 495 452z"/></svg>
                     </a>
                     <a href="https://www.tiktok.com/@iamwind06" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free v7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path d="M544.5 273.9C500.5 274 457.5 260.3 421.7 234.7L421.7 413.4C421.7 446.5 411.6 478.8 392.7 506C373.8 533.2 347.1 554 316.1 565.6C285.1 577.2 251.3 579.1 219.2 570.9C187.1 562.7 158.3 545 136.5 520.1C114.7 495.2 101.2 464.1 97.5 431.2C93.8 398.3 100.4 365.1 116.1 336C131.8 306.9 156.1 283.3 185.7 268.3C215.3 253.3 248.6 247.8 281.4 252.3L281.4 342.2C266.4 337.5 250.3 337.6 235.4 342.6C220.5 347.6 207.5 357.2 198.4 369.9C189.3 382.6 184.4 398 184.5 413.8C184.6 429.6 189.7 444.8 199 457.5C208.3 470.2 221.4 479.6 236.4 484.4C251.4 489.2 267.5 489.2 282.4 484.3C297.3 479.4 310.4 469.9 319.6 457.2C328.8 444.5 333.8 429.1 333.8 413.4L333.8 64L421.8 64C421.7 71.4 422.4 78.9 423.7 86.2C426.8 102.5 433.1 118.1 442.4 131.9C451.7 145.7 463.7 157.5 477.6 166.5C497.5 179.6 520.8 186.6 544.6 186.6L544.6 274z"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M544.5 273.9C500.5 274 457.5 260.3 421.7 234.7L421.7 413.4C421.7 446.5 411.6 478.8 392.7 506C373.8 533.2 347.1 554 316.1 565.6C285.1 577.2 251.3 579.1 219.2 570.9C187.1 562.7 158.3 545 136.5 520.1C114.7 495.2 101.2 464.1 97.5 431.2C93.8 398.3 100.4 365.1 116.1 336C131.8 306.9 156.1 283.3 185.7 268.3C215.3 253.3 248.6 247.8 281.4 252.3L281.4 342.2C266.4 337.5 250.3 337.6 235.4 342.6C220.5 347.6 207.5 357.2 198.4 369.9C189.3 382.6 184.4 398 184.5 413.8C184.6 429.6 189.7 444.8 199 457.5C208.3 470.2 221.4 479.6 236.4 484.4C251.4 489.2 267.5 489.2 282.4 484.3C297.3 479.4 310.4 469.9 319.6 457.2C328.8 444.5 333.8 429.1 333.8 413.4L333.8 64L421.8 64C421.7 71.4 422.4 78.9 423.7 86.2C426.8 102.5 433.1 118.1 442.4 131.9C451.7 145.7 463.7 157.5 477.6 166.5C497.5 179.6 520.8 186.6 544.6 186.6L544.6 274z"/></svg>
                     </a>
                 </div>
             </div>
         </div>
     </footer>
 
-    <script src="Homepage.js" defer></script>
+    <script src="Homepage.js"></script>
     <script>
-        // KIỂM TRA ĐIỀU HƯỚNG TỰ ĐỘNG
         (function() {
-            // Kiểm tra xem thiết bị có phải là điện thoại không
             const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-
-            // Kiểm tra xem người dùng có từng chọn "Thích xem bản PC" không
             const preferPC = localStorage.getItem('prefer_mode') === 'pc';
 
-            // Nếu là điện thoại VÀ chưa từng chọn xem bản PC -> Đẩy sang mobile.html
-            if (isMobile && !preferPC) {
+            if (isMobile && !preferPC && !window.location.pathname.includes('mobile.html')) {
                 window.location.href = 'mobile.html';
             }
-
-            // Xử lý nút bấm thủ công
-            document.getElementById('btnSwitchToMobile').addEventListener('click', function() {
-                localStorage.setItem('prefer_mode', 'mobile'); // Lưu lại sở thích
-                window.location.href = 'mobile.html';
-            });
         })();
     </script>
 
 </body>
-
 </html>
