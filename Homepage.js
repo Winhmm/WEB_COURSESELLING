@@ -22,7 +22,8 @@ document.addEventListener("DOMContentLoaded", function () {
         if (n < 0) slideIndex = slides.length - 1;
 
         // Trượt slider với animation mượt
-        track.style.transform = `translateX(-${slideIndex * 100}%)`;
+        // track width = 300%, mỗi card = 33.333% => mỗi step shift 33.333%
+        track.style.transform = `translateX(-${slideIndex * 33.3333}%)`;
 
         // Cập nhật dot active
         dots.forEach(dot => dot.classList.remove("active"));
@@ -70,55 +71,6 @@ document.addEventListener("DOMContentLoaded", function () {
     // Khởi động slider
     showSlides(slideIndex);
     startAutoSlide();
-
-    // ==========================================
-    // FORM REGISTRATION WITH LOADING STATE
-    // ==========================================
-    const form = document.querySelector(".mad-lib-form");
-    const submitBtn = document.getElementById("submitBtn");
-    
-    if (form && submitBtn) {
-        const btnText = submitBtn.querySelector(".btn-text");
-        const btnLoading = submitBtn.querySelector(".btn-loading");
-        
-        form.addEventListener("submit", function(e) {
-            e.preventDefault();
-            
-            // Lấy dữ liệu form
-            const formData = new FormData(form);
-            const name = formData.get("fullname");
-            const phone = formData.get("phone");
-            const email = formData.get("email");
-            const course = formData.get("course");
-            
-            // Validation
-            if (!name || name.trim() === "") {
-                alert("⚠️ Vui lòng nhập tên của bạn!");
-                return;
-            }
-            
-            if ((!phone || phone.trim() === "") && (!email || email.trim() === "")) {
-                alert("⚠️ Vui lòng cung cấp ít nhất SĐT hoặc Email!");
-                return;
-            }
-            
-            // Hiện loading
-            btnText.style.display = "none";
-            btnLoading.style.display = "inline-flex";
-            submitBtn.disabled = true;
-            
-            // Giả lập API call (2 giây)
-            setTimeout(() => {
-                alert(`✅ Đăng ký thành công!\n\nThông tin:\n• Tên: ${name}\n• SĐT: ${phone || 'Chưa cung cấp'}\n• Email: ${email || 'Chưa cung cấp'}\n\nChúng tôi sẽ liên hệ bạn sớm!`);
-                
-                // Reset
-                form.reset();
-                btnText.style.display = "inline";
-                btnLoading.style.display = "none";
-                submitBtn.disabled = false;
-            }, 2000);
-        });
-    }
 
     // ==========================================
     // SMOOTH SCROLL FOR NAVIGATION
@@ -236,11 +188,65 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
+    // ==========================================
+    // SEARCH BAR — BASIC COURSE FILTER
+    // ==========================================
+    const searchInput = document.querySelector('.search-input');
+    const searchBtn = document.querySelector('.search-btn');
+
+    // Course data map (keyword -> section anchor)
+    const courseMap = [
+        { keywords: ['dsa', 'data structure', 'algorithm', 'cây', 'đồ thị', 'tree', 'graph', 'sort'], anchor: '#about', label: 'Data Structures & Algorithms' },
+        { keywords: ['c++', 'cpp', 'cplusplus'], anchor: '#about', label: 'C++ Fundamentals' },
+        { keywords: ['java', 'oop', 'object'], anchor: '#about', label: 'Java OOP Mastery' },
+        { keywords: ['database', 'db', 'sql', 'mysql'], anchor: '#about', label: 'Database Systems' },
+        { keywords: ['testimonial', 'review', 'student', 'đánh giá'], anchor: '#testimonials', label: 'Student Reviews' },
+        { keywords: ['register', 'đăng ký', 'consult', 'tư vấn', 'contact'], anchor: '#register', label: 'Register for Consultation' }
+    ];
+
+    function handleSearch() {
+        const query = searchInput.value.trim().toLowerCase();
+        if (!query) return;
+
+        const match = courseMap.find(course =>
+            course.keywords.some(kw => query.includes(kw))
+        );
+
+        if (match) {
+            const target = document.querySelector(match.anchor);
+            if (target) {
+                const offsetTop = target.offsetTop - 80;
+                window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+            }
+            searchInput.value = '';
+        } else {
+            // No match — highlight input đỏ nhẹ
+            searchInput.style.borderColor = '#ef4444';
+            searchInput.placeholder = 'No results found...';
+            setTimeout(() => {
+                searchInput.style.borderColor = '';
+                searchInput.placeholder = 'Search courses...';
+            }, 1800);
+        }
+    }
+
+    if (searchBtn) {
+        searchBtn.addEventListener('click', handleSearch);
+    }
+    if (searchInput) {
+        searchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                handleSearch();
+            }
+        });
+    }
+
     console.log("✅ WDSA Website loaded successfully!");
 });
 
 // ==========================================
-// SCROLL HEADER EFFECT
+// SCROLL HEADER EFFECT + SCROLL-TO-TOP BUTTON
 // ==========================================
 window.addEventListener("scroll", function() {
     const header = document.querySelector("header");
@@ -281,3 +287,256 @@ document.addEventListener("mousemove", (e) => {
         icon.style.transform = `translateX(${x * speed}px) translateY(${y * speed}px)`;
     });
 });
+// ==========================================
+// TOAST NOTIFICATION SYSTEM
+// ==========================================
+function showToast(type, title, message, duration = 4000) {
+    const container = document.getElementById("toastContainer");
+    if (!container) return;
+
+    const icons = {
+        success: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>`,
+        error:   `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg>`
+    };
+
+    const toast = document.createElement("div");
+    toast.className = `toast toast-${type}`;
+    toast.innerHTML = `
+        <div class="toast-icon">${icons[type] || icons.success}</div>
+        <div class="toast-body">
+            <div class="toast-title">${title}</div>
+            <div class="toast-message">${message}</div>
+        </div>
+        <button class="toast-close" onclick="this.parentElement.remove()">&times;</button>
+    `;
+
+    container.appendChild(toast);
+
+    // Auto-remove
+    setTimeout(() => {
+        toast.classList.add("toast-hide");
+        toast.addEventListener("animationend", () => toast.remove());
+    }, duration);
+}
+
+// ==========================================
+// SCROLL TO TOP BUTTON
+// ==========================================
+(function () {
+    const btn = document.getElementById("scrollTopBtn");
+    if (!btn) return;
+
+    window.addEventListener("scroll", () => {
+        btn.classList.toggle("visible", window.scrollY > 500);
+    });
+
+    btn.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+})();
+
+// ==========================================
+// MOBILE DROPDOWN TOGGLE (click/tap)
+// ==========================================
+(function () {
+    document.querySelectorAll(".dropdown-toggle").forEach(toggle => {
+        toggle.addEventListener("click", function (e) {
+            if (window.innerWidth > 991) return; // desktop: hover handles it
+            e.preventDefault();
+            e.stopPropagation();
+
+            const parentLi = this.closest("li.dropdown");
+            const isOpen = parentLi.classList.contains("active");
+
+            // Close all other dropdowns
+            document.querySelectorAll("li.dropdown.active").forEach(li => {
+                if (li !== parentLi) li.classList.remove("active");
+            });
+
+            parentLi.classList.toggle("active", !isOpen);
+        });
+    });
+})();
+
+// ==========================================
+// SWIPE GESTURE ON TESTIMONIAL SLIDER (mobile)
+// ==========================================
+(function () {
+    const wrapper = document.querySelector(".testimonial-wrapper");
+    if (!wrapper) return;
+
+    let touchStartX = 0;
+    let touchEndX = 0;
+    const SWIPE_THRESHOLD = 50;
+
+    wrapper.addEventListener("touchstart", (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    wrapper.addEventListener("touchend", (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        const diff = touchStartX - touchEndX;
+
+        if (Math.abs(diff) > SWIPE_THRESHOLD) {
+            if (typeof window.changeSlide === "function") {
+                window.changeSlide(diff > 0 ? 1 : -1); // swipe left → next, right → prev
+            }
+        }
+    }, { passive: true });
+})();
+
+// ==========================================
+// ACTIVE NAV HIGHLIGHT ON SCROLL
+// ==========================================
+(function () {
+    const sections = ["home", "about", "testimonials", "register"];
+    const navLinks = {};
+
+    sections.forEach(id => {
+        const link = document.querySelector(`.nav-menu a[href="#${id}"]`);
+        if (link) navLinks[id] = link;
+    });
+
+    window.addEventListener("scroll", () => {
+        let current = "";
+        sections.forEach(id => {
+            const section = document.getElementById(id);
+            if (!section) return;
+            if (window.scrollY >= section.offsetTop - 120) {
+                current = id;
+            }
+        });
+
+        // Remove all active, set current
+        Object.values(navLinks).forEach(link => link.classList.remove("nav-active"));
+        if (current && navLinks[current]) {
+            navLinks[current].classList.add("nav-active");
+        }
+    });
+
+    
+
+    // ==========================================
+    // 3. FORM SUBMISSION (CONNECT GOOGLE SHEETS)
+    // ==========================================
+    const form = document.querySelector(".mad-lib-form");
+    const submitBtn = document.getElementById("submitBtn");
+    
+    // ⚠️ THAY LINK NÀY BẰNG LINK BẠN COPY Ở BƯỚC 2
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbwKF7XeICcMf_BKukqLU42LYBDEeoSo8hydn4ccBZGgpjj8fUB8xxFd1cTz0QJV5onPFQ/exec';
+
+    if (form && submitBtn) {
+        const btnText = submitBtn.querySelector(".btn-text");
+        const btnLoading = submitBtn.querySelector(".btn-loading");
+        
+        form.addEventListener("submit", function(e) {
+            e.preventDefault();
+            
+            // 1. Validation (Kiểm tra dữ liệu)
+            const formData = new FormData(form);
+            const name = formData.get("fullname");
+            const contact = formData.get("phone") || formData.get("email");
+            
+            if (!name || !name.trim()) {
+                showToast("error", "Lỗi nhập liệu", "Vui lòng nhập tên của bạn!");
+                return;
+            }
+            if (!contact || !contact.trim()) {
+                showToast("error", "Thiếu thông tin", "Vui lòng nhập SĐT hoặc Email để chúng tôi liên hệ!");
+                return;
+            }
+            
+            // 2. Loading State (Hiện hiệu ứng xoay xoay)
+            if(btnText) btnText.style.display = "none";
+            if(btnLoading) btnLoading.style.display = "inline-flex";
+            submitBtn.disabled = true;
+
+            // 3. Gửi dữ liệu đi (Fetch API)
+            fetch(scriptURL, { method: 'POST', body: formData})
+                .then(response => {
+                    // Xử lý khi thành công
+                    showToast("success", "Đăng ký thành công!", `Chào ${name}, WDSA đã nhận thông tin và sẽ liên hệ sớm!`);
+                    
+                    // Reset form và nút bấm
+                    form.reset();
+                    if(btnText) btnText.style.display = "inline";
+                    if(btnLoading) btnLoading.style.display = "none";
+                    submitBtn.disabled = false;
+                })
+                .catch(error => {
+                    // Xử lý khi lỗi (ví dụ mất mạng)
+                    console.error('Error!', error.message);
+                    showToast("error", "Lỗi kết nối", "Không thể gửi đơn. Vui lòng thử lại sau!");
+                    
+                    // Trả lại nút bấm để họ ấn lại
+                    if(btnText) btnText.style.display = "inline";
+                    if(btnLoading) btnLoading.style.display = "none";
+                    submitBtn.disabled = false;
+                });
+        });
+    }
+
+    // ==========================================
+    // TYPEWRITER EFFECT (TYPED.JS)
+    // ==========================================
+    const typedElement = document.querySelector('.auto-type');
+    
+    if (typedElement) {
+        var typed = new Typed('.auto-type', {
+            // Danh sách các từ khóa sẽ thay đổi
+            strings: ["Sharing", "C++", "Algorithms", "Data Structures"],
+            
+            typeSpeed: 100, // Tốc độ gõ (ms) - càng nhỏ càng nhanh
+            backSpeed: 50,  // Tốc độ xóa (ms)
+            backDelay: 1500, // Chờ 1.5s trước khi xóa để người dùng kịp đọc
+            loop: true,      // Lặp lại vô tận
+            
+            // Cấu hình con trỏ (dấu gạch đứng nhấp nháy)
+            showCursor: true,
+            cursorChar: '|',
+            autoInsertCss: true, // Tự động thêm CSS cho con trỏ
+        });
+    }
+
+    // ==========================================
+    // 10. NUMBER COUNTER ANIMATION
+    // ==========================================
+    const statsSection = document.querySelector(".stats-section");
+    const counters = document.querySelectorAll(".counter");
+    let hasRun = false; // Cờ kiểm tra để chỉ chạy 1 lần duy nhất
+
+    if (statsSection && counters.length > 0) {
+        const statsObserver = new IntersectionObserver((entries) => {
+            const [entry] = entries;
+            
+            // Khi người dùng lướt tới và chưa chạy lần nào
+            if (entry.isIntersecting && !hasRun) {
+                
+                counters.forEach(counter => {
+                    const updateCount = () => {
+                        const target = +counter.getAttribute('data-target'); // Lấy số đích (dấu + để chuyển chuỗi thành số)
+                        const count = +counter.innerText; // Số hiện tại đang chạy
+                        
+                        // Tốc độ chạy (chia càng lớn chạy càng chậm)
+                        const speed = 200; 
+                        const increment = target / speed;
+
+                        if (count < target) {
+                            counter.innerText = Math.ceil(count + increment);
+                            setTimeout(updateCount, 20); // Gọi lại hàm sau 20ms
+                        } else {
+                            counter.innerText = target; // Đảm bảo về đích chính xác
+                        }
+                    };
+                    updateCount();
+                });
+
+                hasRun = true; // Đánh dấu là đã chạy xong
+            }
+        }, { threshold: 0.5 }); // threshold 0.5 nghĩa là hiện 50% khung hình mới chạy
+
+        statsObserver.observe(statsSection);
+    }
+    
+    
+})();
