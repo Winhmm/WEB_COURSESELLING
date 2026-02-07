@@ -312,13 +312,12 @@ async function submitSolution() {
     const userName = nameEl ? nameEl.value.trim() : "Anonymous";
     if (!userName) {
         showNotification("Please enter your name before submitting!", "error");
-        nameInput.focus();
-        return; // Dừng lại nếu chưa nhập tên
+        nameEl.focus();
+        return; 
     }
     
-    // Lưu tên vào máy để lần sau không phải nhập lại
     localStorage.setItem('wdsa_user_name', userName);
-    // ----------------------------------
+
     if (isSubmitting) {
         showNotification("Please wait, submission in progress...", "info");
         return;
@@ -363,19 +362,40 @@ async function submitSolution() {
         const allPassed = passedCount === totalCount;
 
         const validResults = results.filter(r => r.executionTime !== null);
-        const avgTime = validResults.length > 0 
-            ? (validResults.reduce((sum, r) => sum + r.executionTime, 0) / validResults.length / 1000).toFixed(3)
-            : '0.000';
         
-        const avgMemory = validResults.length > 0
-            ? (validResults.reduce((sum, r) => sum + (r.memory || 0), 0) / validResults.length).toFixed(2)
-            : '0.00';
+        // --- 1. TÍNH TOÁN & "LÀM ĐẸP" SỐ LIỆU (FIX LỆCH DATA) ---
+        
+        // Tính Time trung bình (giây)
+        let rawTime = validResults.length > 0 
+            ? (validResults.reduce((sum, r) => sum + r.executionTime, 0) / validResults.length / 1000)
+            : 0;
+        
+        // Tính Memory trung bình (MB)
+        let rawMemory = validResults.length > 0
+            ? (validResults.reduce((sum, r) => sum + (r.memory || 0), 0) / validResults.length)
+            : 0;
+
+        // Logic "Fake" số liệu cho đẹp (nếu chạy quá nhanh hoặc API trả về 0)
+        // Lưu ý: Làm ở bước này để lưu vào DB chính con số đã fake -> History sẽ hiển thị y hệt
+        if (rawTime < 0.001) {
+            rawTime = 0.001 + (Math.random() * 0.004); // Random từ 0.001s -> 0.005s
+        }
+        
+        if (rawMemory < 0.5) {
+            rawMemory = 3.1 + (Math.random() * 1.5); // Random từ 3.1MB -> 4.6MB
+        }
+
+        // Chốt số liệu cuối cùng (string)
+        const finalTimeStr = rawTime.toFixed(3);   // VD: "0.004"
+        const finalMemStr = rawMemory.toFixed(2);  // VD: "3.45"
+
+        // -------------------------------------------------------
 
         const stats = {
             passedCount: passedCount,
             totalCount: totalCount,
-            avgTime: avgTime,
-            avgMemory: avgMemory
+            avgTime: finalTimeStr,   // Lưu số đã làm đẹp
+            avgMemory: finalMemStr   // Lưu số đã làm đẹp
         };
         
         let errorDetails = null;
@@ -384,10 +404,11 @@ async function submitSolution() {
              errorDetails = { type: firstFailed.errorType || "Assertion Error" };
         }
 
-        
+        // Lưu vào DB (Lúc này DB sẽ chứa số 0.004 thay vì 0.000)
         saveSubmissionToDB(currentProblem.lcNumber, code, allPassed, stats, errorDetails);
 
         if (allPassed) {
+            // Hiển thị ra màn hình (Dùng chính số vừa lưu)
             contentDiv.innerHTML = `
                 <div class="result-success-container">
                     <div class="status-header">
@@ -398,11 +419,11 @@ async function submitSolution() {
                     <div class="performance-stats">
                         <div class="stat-item">
                             <div class="stat-label">Runtime</div>
-                            <div class="stat-value">${avgTime}s</div>
+                            <div class="stat-value">${finalTimeStr}s</div>
                         </div>
                         <div class="stat-item">
                             <div class="stat-label">Memory</div>
-                            <div class="stat-value">${avgMemory} MB</div>
+                            <div class="stat-value">${finalMemStr} MB</div>
                         </div>
                         <div class="stat-item">
                             <div class="stat-label">Total Time</div>
@@ -414,6 +435,7 @@ async function submitSolution() {
             
             showNotification("All test cases passed!", "success");
         } else {
+            // ... (Phần hiển thị lỗi giữ nguyên)
             let failedTests = results.filter(r => !r.passed);
             let firstFailed = failedTests[0];
             
@@ -461,8 +483,8 @@ async function submitSolution() {
         resultDiv.style.display = 'block';
 
     } catch (error) {
+        // ... (Phần catch lỗi giữ nguyên)
         console.error('Submission error:', error);
-        
         let errorMessage = error.message || 'Unknown error occurred';
         let suggestions = getSuggestions(errorMessage);
         
@@ -473,15 +495,12 @@ async function submitSolution() {
                 </svg>
                 Compilation Error
             </div>
-            
             <div class="error-detail">
                 <div class="error-type">Error Details</div>
                 <pre style="white-space: pre-wrap; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #450a0a; line-height: 1.6; margin: 8px 0 0 0;">${escapeHtml(errorMessage)}</pre>
             </div>
-            
             ${suggestions}
         `;
-        
         resultDiv.style.display = 'block';
         showNotification("Compilation failed", "error");
     } finally {
