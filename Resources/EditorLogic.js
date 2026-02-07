@@ -67,14 +67,57 @@ function renderProblemUI() {
     document.getElementById('pDesc').innerHTML = currentProblem.description;
     
 
+
+
     document.getElementById('pExamples').innerHTML = currentProblem.examples.map((ex, i) => `
         <div class="example-box">
-            <strong>Example ${i + 1}:</strong><br>
-            <div style="margin-top:4px">Input: <code>${escapeHtml(ex.input)}</code></div>
-            <div style="margin-top:4px">Output: <code>${escapeHtml(ex.output)}</code></div>
-            ${ex.explain ? `<div style="margin-top:4px; color:#64748b;">${escapeHtml(ex.explain)}</div>` : ''}
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; border-bottom:1px solid #e2e8f0; padding-bottom:8px;">
+                <strong style="font-size:14px; color:#1e293b;">Example ${i + 1}:</strong>
+                
+                <button onclick="copyInput(${i})" style="
+                    background:white; 
+                    color:#2d7a4e; 
+                    border:1px solid #2d7a4e; 
+                    padding:4px 10px; 
+                    border-radius:6px; 
+                    cursor:pointer; 
+                    font-size:12px; 
+                    font-weight:600; 
+                    display:flex; 
+                    align-items:center; 
+                    gap:4px;
+                    transition:all 0.2s;" 
+                    onmouseover="this.style.background='#f0fdf4'; this.style.borderColor='#1a472a'; this.style.color='#1a472a'" 
+                    onmouseout="this.style.background='white'; this.style.borderColor='#2d7a4e'; this.style.color='#2d7a4e'"
+                    title="Copy Input to Clipboard">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    Copy Input
+                </button>
+            </div>
+
+            <div style="margin-top:8px;">
+                <div style="margin-bottom:4px; font-size:13px; font-weight:600; color:#64748b;">Input:</div>
+                <pre id="input-${i}" style="margin:0; font-family:monospace; white-space:pre; background:#f1f5f9; padding:8px; border-radius:6px; border:1px solid #e2e8f0;">${escapeHtml(ex.input)}</pre>
+            </div>
+            
+            <div style="margin-top:12px">
+                <div style="margin-bottom:4px; font-size:13px; font-weight:600; color:#64748b;">Output:</div>
+                <pre style="margin:4px 0 0 0; font-family:monospace; white-space:pre; background:#f1f5f9; padding:8px; border-radius:6px; border:1px solid #e2e8f0;">${escapeHtml(ex.output)}</pre>
+            </div>
+            
+            ${ex.explain ? `<div style="margin-top:12px; color:#475569; font-size:14px; line-height:1.5; font-style:italic;">${escapeHtml(ex.explain)}</div>` : ''}
         </div>
     `).join('');
+}
+
+function copyInput(exampleIndex) {
+    const inputText = currentProblem.examples[exampleIndex].input;
+    navigator.clipboard.writeText(inputText).then(() => {
+        showNotification('Input copied to clipboard! 📋', 'success');
+    }).catch(err => {
+        console.error('Failed to copy:', err);
+        showNotification('Failed to copy input', 'error');
+    });
 }
 
 function escapeHtml(text) {
@@ -503,29 +546,145 @@ function getSuggestions(msg) {
     `;
 }
 
+// --- Cấu hình EditorLogic.js ---
 const PISTON_API_URL = 'https://emkc.org/api/v2/piston/execute';
-const MAX_CONCURRENT = 2; 
-const BATCH_DELAY = 800; 
+const SEPARATOR = "|||WDSA_SEP|||"; // Mốc phân cách output
 
 async function executeCodeParallel(userCode, testCases) {
     if (!userCode.includes('main')) {
         throw new Error("Code must contain a main() function!");
     }
 
-    const results = [];
+    // 1. Chuẩn bị "Code Quản Lý" (Wrapper) bằng C++
+    // Kỹ thuật: Dùng Raw String Literal của C++ (R"TAG(...)TAG") để nhúng code user và input vào
     
-    for (let i = 0; i < testCases.length; i += MAX_CONCURRENT) {
-        const batch = testCases.slice(i, i + MAX_CONCURRENT);
-        const batchPromises = batch.map((tc, idx) => executeTestCase(userCode, tc, i + idx));
-        const batchResults = await Promise.all(batchPromises);
-        results.push(...batchResults);
-        
-        if (i + MAX_CONCURRENT < testCases.length) {
-            await new Promise(resolve => setTimeout(resolve, BATCH_DELAY));
-        }
+    let cppWrapper = `
+    #include <iostream>
+    #include <fstream>
+    #include <cstdlib>
+    #include <string>
+    #include <vector>
+
+    // Hàm tiện ích để ghi file xuống đĩa
+    void writeFile(const std::string& name, const std::string& content) {
+        std::ofstream f(name);
+        f << content;
+        f.close();
     }
 
-    return results;
+    int main() {
+        // A. Ghi code của người dùng ra file
+        std::string userCode = R"WDSA_CODE(${userCode})WDSA_CODE";
+        writeFile("solution.cpp", userCode);
+
+        // B. Biên dịch code người dùng
+        // system() trả về 0 nếu thành công
+        int compileStatus = system("g++ -O2 solution.cpp -o app");
+        if (compileStatus != 0) {
+            std::cout << "COMPILATION_ERROR" << std::endl;
+            return 0;
+        }
+
+        // C. Chạy lần lượt từng Test Case
+    `;
+
+    // Nhúng dữ liệu của từng test case vào logic C++
+    testCases.forEach((tc, index) => {
+        cppWrapper += `
+        {
+            // 1. Ghi file input
+            std::string input = R"WDSA_IN(${tc.input})WDSA_IN";
+            writeFile("in_${index}.txt", input);
+
+            // 2. Gọi chương trình user với input này
+            // Lưu ý: Output của user sẽ in thẳng ra stdout chung
+            int ret = system("./app < in_${index}.txt");
+
+            // 3. Kiểm tra Runtime Error (nếu return code != 0)
+            if (ret != 0) {
+                std::cout << "RUNTIME_ERROR_MARKER";
+            }
+
+            // 4. In dấu phân cách để JS cắt chuỗi sau này
+            std::cout << "${SEPARATOR}" << std::endl;
+        }
+        `;
+    });
+
+    cppWrapper += `
+        return 0;
+    }
+    `;
+
+    // 2. Gửi Request (Chỉ 1 file duy nhất => Không bị Piston tự compile nhầm)
+    try {
+        const payload = {
+            language: "cpp",
+            version: "10.2.0",
+            files: [
+                { name: "main.cpp", content: cppWrapper } 
+            ],
+            run_timeout: 5000,
+        };
+
+        const response = await fetch(PISTON_API_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+
+        const data = await response.json();
+
+        // 3. Xử lý kết quả trả về
+        if (data.run && data.run.stderr && !data.run.stdout) {
+            throw new Error(data.run.stderr); // Lỗi hệ thống nghiêm trọng
+        }
+
+        const rawOutput = data.run.stdout || "";
+
+        // Kiểm tra lỗi biên dịch (do Wrapper in ra)
+        if (rawOutput.includes("COMPILATION_ERROR")) {
+            // Lấy chi tiết lỗi từ stderr (nơi g++ in ra lỗi)
+            throw new Error(data.run.stderr || "Compilation Failed");
+        }
+
+        // Cắt chuỗi kết quả
+        const resultsParts = rawOutput.split(SEPARATOR);
+
+        const finalResults = testCases.map((tc, index) => {
+            let part = resultsParts[index] || "";
+            
+            // Kiểm tra Runtime Error
+            let errorType = null;
+            if (part.includes("RUNTIME_ERROR_MARKER")) {
+                errorType = "Runtime Error";
+                part = part.replace("RUNTIME_ERROR_MARKER", "").trim(); // Lọc bỏ marker
+                // Nếu runtime error, thường output sẽ rỗng hoặc lỗi, ta lấy stderr chung nếu cần
+                if (!part) part = "Error: Program crashed (SegFault/DivByZero)";
+            }
+
+            // Chuẩn hóa output để so sánh
+            const actual = part.trim(); 
+            const expected = tc.expectedOutput.replace(/\r\n/g, '\n').trim();
+
+            return {
+                passed: !errorType && (actual === expected),
+                input: tc.input,
+                expected: tc.expectedOutput,
+                actual: actual,
+                executionTime: 0, // Batch run không đo time từng case chính xác
+                memory: 0,
+                errorType: errorType
+            };
+        });
+
+        return finalResults;
+
+    } catch (error) {
+        // Fallback hiển thị lỗi
+        console.error("Execution Error:", error);
+        throw error;
+    }
 }
 
 async function executeTestCase(userCode, testCase, index, retryCount = 0) {
@@ -579,7 +738,8 @@ async function executeTestCase(userCode, testCase, index, retryCount = 0) {
 
         // Check Compilation Error
         if (data.compile && data.compile.code !== 0) {
-            throw new Error(data.compile.stderr || data.compile.output || "Unknown Compilation Error");
+            console.error('Compilation failed:', data.compile);
+            throw new Error(data.compile.stderr || data.compile.output || JSON.stringify(data.compile) || "Unknown Compilation Error");
         }
 
         let memoryUsageMB = 0;

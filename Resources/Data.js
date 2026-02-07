@@ -45,34 +45,68 @@ const CHAPTERS = [
 
                 timeComplexity: "O(log n)",
                 spaceComplexity: "O(1)",
-                // Test cases for code execution
                 testCases: [
-                    {
-                        // Thứ tự: n -> target -> mảng
-                        input: "6\n9\n-1 0 3 5 9 12", 
-                        expectedOutput: "4",
-                        description: "Test case 1: Basic search - found"
-                    },
-                    {
-                        input: "6\n2\n-1 0 3 5 9 12",
-                        expectedOutput: "-1",
-                        description: "Test case 2: Basic search - not found"
-                    },
-                    {
-                        input: "1\n5\n5",
-                        expectedOutput: "0",
-                        description: "Test case 3: Single element - found"
-                    },
-                    {
-                        input: "10\n10\n1 2 3 4 5 6 7 8 9 10",
-                        expectedOutput: "9",
-                        description: "Test case 4: Last element"
-                    },
-                    {
-                        input: "5\n1\n2 4 6 8 10",
-                        expectedOutput: "-1",
-                        description: "Test case 5: Smaller than all elements"
-                    }
+                    { input: "6\n9\n-1 0 3 5 9 12", expectedOutput: "4" },
+                    { input: "6\n2\n-1 0 3 5 9 12", expectedOutput: "-1" },
+                    { input: "1\n5\n5", expectedOutput: "0" },
+                    { input: "10\n10\n1 2 3 4 5 6 7 8 9 10", expectedOutput: "9" },
+                    { input: "5\n1\n2 4 6 8 10", expectedOutput: "-1" },
+
+                    { input: "3\n7\n5 7 9", expectedOutput: "1" },
+                    { input: "3\n4\n5 7 9", expectedOutput: "-1" },
+                    { input: "4\n-3\n-5 -3 -1 0", expectedOutput: "1" },
+                    { input: "4\n-6\n-5 -3 -1 0", expectedOutput: "-1" },
+                    { input: "5\n100\n10 20 30 40 50", expectedOutput: "-1" },
+
+                    { input: "5\n10\n10 20 30 40 50", expectedOutput: "0" },
+                    { input: "5\n50\n10 20 30 40 50", expectedOutput: "4" },
+                    { input: "6\n4\n1 2 3 4 5 6", expectedOutput: "3" },
+                    { input: "6\n5\n1 2 3 4 5 6", expectedOutput: "4" },
+                    { input: "7\n1\n1 3 5 7 9 11 13", expectedOutput: "0" },
+
+                    { input: "7\n13\n1 3 5 7 9 11 13", expectedOutput: "6" },
+                    { input: "7\n8\n1 3 5 7 9 11 13", expectedOutput: "-1" },
+                    { input: "8\n6\n1 2 3 4 5 6 7 8", expectedOutput: "5" },
+                    { input: "8\n0\n1 2 3 4 5 6 7 8", expectedOutput: "-1" },
+                    { input: "8\n9\n1 2 3 4 5 6 7 8", expectedOutput: "-1" },
+
+                    { input: "10\n42\n1 5 10 20 30 40 42 50 60 70", expectedOutput: "6" },
+                    { input: "10\n41\n1 5 10 20 30 40 42 50 60 70", expectedOutput: "-1" },
+                    { input: "9\n15\n-20 -10 -5 0 5 10 15 20 25", expectedOutput: "6" },
+                    { input: "9\n-15\n-20 -10 -5 0 5 10 15 20 25", expectedOutput: "-1" },
+                    { input: "1\n0\n0", expectedOutput: "0" },
+
+                    { input: "2\n1\n1 2", expectedOutput: "0" },
+                    { input: "2\n2\n1 2", expectedOutput: "1" },
+                    { input: "2\n3\n1 2", expectedOutput: "-1" },
+                    { input: "9\n4\n1 2 3 4 5 6 7 8 9", expectedOutput: "3" },
+                    { input: "8\n5\n1 2 3 4 5 6 7 8", expectedOutput: "4" },
+
+                    { input: "0\n5\n", expectedOutput: "-1" },
+                    { input: "7\n0\n0 0 0 0 0 0 0", expectedOutput: "3" },
+                    { input: "5\n7\n1 3 5 7 9", expectedOutput: "3" },
+
+                    { input: "4\n2\n2 4 6 8", expectedOutput: "0" },
+                    { input: "4\n8\n2 4 6 8", expectedOutput: "3" },
+                    { input: "4\n5\n2 4 6 8", expectedOutput: "-1" },
+                    { input: "5\n3\n1 3 5 7 9", expectedOutput: "1" },
+                    { input: "5\n7\n1 3 5 7 9", expectedOutput: "3" },
+
+                    { input: "6\n-1\n-5 -3 -1 1 3 5", expectedOutput: "2" },
+                    { input: "6\n0\n-5 -3 -1 1 3 5", expectedOutput: "-1" },
+                    { input: "8\n15\n1 3 6 10 15 21 28 36", expectedOutput: "4" },
+                    { input: "8\n14\n1 3 6 10 15 21 28 36", expectedOutput: "-1" },
+                    { input: "3\n1000000000\n1 500000000 1000000000", expectedOutput: "2" },
+                    { input: "4\n100\n10 20 30 40", expectedOutput: "-1" },
+                    { input: "5\n-10\n-10 -5 0 5 10", expectedOutput: "0" },
+                    
+
+                    { input: "10\n300\n50 100 150 200 250 300 350 400 450 500", expectedOutput: "5" },
+                    { input: "8\n175\n25 75 125 175 225 275 325 375", expectedOutput: "3" },
+                    { input: "7\n900\n100 200 300 400 500 600 700", expectedOutput: "-1" },
+                    { input: "9\n700\n100 200 300 400 500 600 700 800 900", expectedOutput: "6" },
+                    { input: "6\n50\n100 200 300 400 500 600", expectedOutput: "-1" }
+
                 ]
             }
         ]
@@ -118,7 +152,8 @@ const CHAPTERS = [
                         input: "1", 
                         output: "1", 
                         explain: "Explanation: There is only one position possible on a 1x1 board."
-                    }, {
+                    },
+                    {
                         input: "8",
                         output: "92",
                         explain: "Explanation: For a standard 8x8 chessboard, there are 92 distinct ways to place the queens."
@@ -186,7 +221,7 @@ const CHAPTERS = [
                 `,
                 examples: [
                     {
-                        input: "16 8 9", 
+                        input: "16 8 91", 
                         output: "28", 
                         explain: "There are 28 different sets consisting of 8 distinct numbers from 1 to 16 whose total sum is exactly 91."
                     },
@@ -226,8 +261,90 @@ const CHAPTERS = [
                     }
                 ]
             },
+            {
+                lcNumber: 2001,
+                customId: 3,
+                title: "Rat in a Maze",
+                difficulty: "medium",
+                tags: ["Backtracking", "Matrix", "Recursion"],
+                lcUrl: "#",
+                description: `
+                    <p>A maze is represented as a binary matrix of size <strong>N × N</strong>.</p>
+                    
+                    <p>A rat starts at cell <strong>(1, 1)</strong> and wants to reach cell <strong>(N, N)</strong>.</p>
+                    
+                    <p>The rat can only move <strong>down (D)</strong> or <strong>right (R)</strong>, and can only move to a cell if that cell has a value of <strong>1</strong>.</p>
+                    
+                    <p><strong>Note:</strong> On each path, the rat can visit each cell at most once.</p>
+                    
+                    <strong>Input Format:</strong>
+                    <ul>
+                        <li>First line: An integer <strong>N</strong> (size of the matrix)</li>
+                        <li>Next <strong>N</strong> lines: Each line contains <strong>N</strong> integers (0 or 1)</li>
+                    </ul>
+                    
+                    <strong>Output Format:</strong>
+                    <ul>
+                        <li>Print all valid paths in lexicographically increasing order, one path per line</li>
+                        <li>If the rat cannot reach cell (N, N), print <code>-1</code></li>
+                        <li>In the path: <strong>R</strong> = move right, <strong>D</strong> = move down</li>
+                    </ul>
+                    
+                    <strong>Constraints:</strong>
+                    <ul>
+                        <li>1 ≤ N ≤ 12</li>
+                        <li>The starting cell (1, 1) is guaranteed to be 1</li>
+                    </ul>
+                `,
+                examples: [
+                    {
+                        input: "4\n1 1 0 1\n1 1 1 1\n1 0 1 1\n1 1 1 1", 
+                        output: "DDDRRR\nDRRDDR\nDRRDRD\nDRRRDD\nRDRDDR\nRDRDRD\nRDRRDD", 
+                        explain: "There are 7 valid paths from (1,1) to (4,4), sorted in lexicographical order."
+                    },
+                    {
+                        input: "2\n1 0\n0 1", 
+                        output: "-1", 
+                        explain: "There is no valid path from (1,1) to (2,2)."
+                    },
+                    {
+                        input: "3\n1 1 1\n1 1 1\n1 1 1", 
+                        output: "DDRR\nDRDR\nDRRD\nRDDR\nRDRD\nRRDD", 
+                        explain: "There are 6 valid paths in a matrix of all 1s."
+                    }
+                ],
+                timeComplexity: "O(2^(N²))",
+                spaceComplexity: "O(N²)",
+                testCases: [
+                    {
+                        input: "4\n1 1 0 1\n1 1 1 1\n1 0 1 1\n1 1 1 1",
+                        expectedOutput: "DDDRRR\nDRRDDR\nDRRDRD\nDRRRDD\nRDRDDR\nRDRDRD\nRDRRDD",
+                        description: "Test case 1: Example maze with obstacles"
+                    },
+                    {
+                        input: "2\n1 0\n0 1",
+                        expectedOutput: "-1",
+                        description: "Test case 2: No valid path"
+                    },
+                    {
+                        input: "3\n1 1 1\n1 1 1\n1 1 1",
+                        expectedOutput: "DDRR\nDRDR\nDRRD\nRDDR\nRDRD\nRRDD",
+                        description: "Test case 3: All cells accessible"
+                    },
+                    {
+                        input: "1\n1",
+                        expectedOutput: "",
+                        description: "Test case 4: Single cell (already at destination)"
+                    },
+                    {
+                        input: "5\n1 1 1 1 1\n1 0 0 0 1\n1 1 1 0 1\n1 0 1 1 1\n1 1 1 1 1",
+                        expectedOutput: "DDDDRRRR\nDDRRDDRR\nDDRRDRDR\nDDRRDRRD\nRRRRDDDD",
+                        description: "Test case 5: Larger maze with limited paths"
+                    }
+                ]
+            }
         ]
-    },
+    }
 ];
 
 

@@ -423,38 +423,47 @@ if (typedElement) {
 }
 
 
+/* ===== STATS COUNTER ANIMATION (ĐÃ SỬA LỖI) ===== */
 const statsSection = document.querySelector(".stats-section");
 const counters = document.querySelectorAll(".counter");
-let hasRun = false;
+let hasRun = false; // Biến cờ để đảm bảo chỉ chạy 1 lần
 
 if (statsSection && counters.length > 0) {
     const statsObserver = new IntersectionObserver((entries) => {
         const [entry] = entries;
     
+        // Kiểm tra nếu vùng thống kê hiển thị trên màn hình và chưa chạy bao giờ
         if (entry.isIntersecting && !hasRun) {
             
             counters.forEach(counter => {
-                const updateCount = () => {
-                    const target = +counter.getAttribute('data-target'); 
-                    const count = +counter.innerText; y
-                    
-                   
-                    const speed = 200; 
-                    const increment = target / speed;
+                // Lấy số đích từ data-target (ví dụ: 1000)
+                const target = +counter.getAttribute('data-target');
+                const duration = 2000; // Thời gian chạy (2 giây)
+                const stepTime = 20;   // Cập nhật mỗi 20ms
+                
+                // Tính toán bước nhảy dựa trên thời gian
+                const increment = target / (duration / stepTime);
 
-                    if (count < target) {
-                        counter.innerText = Math.ceil(count + increment);
-                        setTimeout(updateCount, 20); 
+                let currentCount = 0;
+
+                const updateCount = () => {
+                    currentCount += increment;
+
+                    if (currentCount < target) {
+                        // Làm tròn lên để số đẹp
+                        counter.innerText = Math.ceil(currentCount);
+                        setTimeout(updateCount, stepTime); 
                     } else {
+                        // Đảm bảo số cuối cùng chính xác là target
                         counter.innerText = target; 
                     }
                 };
                 updateCount();
             });
 
-            hasRun = true; 
+            hasRun = true; // Đánh dấu là đã chạy xong, không chạy lại khi scroll lên xuống
         }
-    }, { threshold: 0.5 }); 
+    }, { threshold: 0.2 }); // threshold 0.2: Chỉ cần thấy 20% khung là bắt đầu chạy (dễ kích hoạt hơn 0.5)
 
     statsObserver.observe(statsSection);
 }
