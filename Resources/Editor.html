@@ -114,7 +114,7 @@
     }
 
     .problem-header {
-        padding: 20px 24px;
+        padding: 12px 24px 8px 24px; 
         border-bottom: 1px solid #f0f0f0;
         background: #fafbfc;
     }
@@ -159,12 +159,18 @@
     .badge.hard { background: #fee2e2; color: #991b1b; }
 
     .problem-content {
-        padding: 24px;
+        /* Giảm padding-top xuống 4px để chữ sát ngay dưới đường kẻ */
+        padding: 4px 24px 24px 24px; 
         overflow-y: auto;
         flex: 1;
         color: #334155;
         line-height: 1.7;
         font-size: 15px;
+    }
+    
+    .problem-content > *:first-child {
+        margin-top: 0 !important;
+        padding-top: 0 !important;
     }
 
     .problem-content code {
@@ -559,6 +565,120 @@
         }
     }
 
+    /* Modal Backdrop */
+    .modal-overlay {
+        display: none;
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        z-index: 2000;
+        justify-content: center;
+        align-items: center;
+        backdrop-filter: blur(4px);
+        animation: fadeIn 0.2s ease;
+    }
+
+    /* Modal Box */
+    .modal-box {
+        background: white;
+        width: 90%;
+        max-width: 800px;
+        height: 80vh;
+        border-radius: 12px;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .modal-header {
+        padding: 16px 24px;
+        border-bottom: 1px solid #e2e8f0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #f8fafc;
+    }
+
+    .modal-title {
+        font-size: 18px;
+        font-weight: 700;
+        color: #0f172a;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .btn-close {
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        color: #64748b;
+        padding: 4px;
+        border-radius: 4px;
+        transition: 0.2s;
+    }
+    .btn-close:hover { background: #fee2e2; color: #ef4444; }
+
+    .modal-body {
+        flex: 1;
+        overflow: hidden;
+        position: relative;
+        background: #1e1e1e; /* Màu nền giống VS Code Dark */
+    }
+
+    /* Nút tiện ích trong Modal */
+    .modal-actions {
+        padding: 12px 24px;
+        background: #fff;
+        border-top: 1px solid #e2e8f0;
+        display: flex;
+        justify-content: flex-end;
+        gap: 12px;
+    }
+
+    .btn-secondary {
+        padding: 8px 16px;
+        border-radius: 6px;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        border: 1px solid #cbd5e1;
+        background: white;
+        color: #334155;
+        transition: 0.2s;
+    }
+
+    /* Editor.html - Trong thẻ <style> */
+    .editor-tools {
+        display: flex;          /* Dàn hàng ngang */
+        align-items: center;    /* Căn giữa dọc */
+        gap: 10px;              /* Khoảng cách giữa 2 nút là 10px */
+    }
+
+    /* Editor.html - Thêm vào trong <style> */
+
+    /* Nút Solution màu Vàng */
+    .btn-tool.solution {
+        background: rgba(255, 193, 7, 0.15);     /* Nền vàng nhạt trong suốt */
+        border-color: rgba(255, 193, 7, 0.4);     /* Viền vàng */
+        color: #ffd54f;                           /* Chữ màu vàng sáng */
+        margin-left: 8px;                         /* Cách nút Reset một chút */
+    }
+
+    /* Hiệu ứng khi di chuột vào nút Solution */
+    .btn-tool.solution:hover {
+        background: rgba(255, 193, 7, 0.25);
+        color: #ffffff;
+        box-shadow: 0 0 12px rgba(255, 193, 7, 0.4); /* Phát sáng nhẹ */
+        border-color: #ffd54f;
+    }
+    .btn-secondary:hover { background: #f1f5f9; border-color: #94a3b8; }
+
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
 </style>
 <body>
 
@@ -599,6 +719,14 @@
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
                     Reset
                 </button>
+                
+                <button class="btn-tool" onclick="openSolution()" title="View Sample Solution">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                        <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                    Solution
+                </button>
             </div>
         </div>
 
@@ -610,6 +738,34 @@
             <button class="btn-submit" onclick="submitSolution()">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
                 Submit Solution
+            </button>
+        </div>
+    </div>
+</div>
+
+
+<div id="solutionModal" class="modal-overlay">
+    <div class="modal-box">
+        <div class="modal-header">
+            <div class="modal-title">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                Reference Solution
+            </div>
+            <button class="btn-close" onclick="closeSolution()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+        </div>
+        
+        <div class="modal-body">
+            <div id="solution-monaco-container" style="width:100%; height:100%;"></div>
+        </div>
+        
+        <div class="modal-actions">
+            <button class="btn-secondary" onclick="copySolutionToClipboard()">
+                Copy to Clipboard
+            </button>
+            <button class="btn-submit" onclick="applySolutionToEditor()" style="padding: 8px 16px;">
+                Replace My Code
             </button>
         </div>
     </div>

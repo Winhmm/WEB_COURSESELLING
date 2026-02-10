@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IELTS Writing | WDSA</title>
+    <link rel="stylesheet" href="ielts-wdsa.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="../index.html" class="logo">WDSA</a>
+            <ul class="nav-links">
+                <li><a href="ielts-index.html">Overview</a></li>
+                <li><a href="ielts-listening.html">Listening</a></li>
+                <li><a href="ielts-reading.html">Reading</a></li>
+                <li><a href="ielts-speaking.html">Speaking</a></li>
+                <li><a href="ielts-writing.html" class="active">Writing</a></li>
+            </ul>
+            <a href="ielts-index.html" class="back-home">← Back</a>
+        </div>
+    </nav>
+
+    <section class="hero-section">
+        <div class="container">
+            <h1>IELTS Writing</h1>
+            <p>Master IELTS Writing Task 1 and Task 2 with proven templates, strategies, 
+               vocabulary, and examiner feedback to achieve your target band score.</p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+            <div style="margin-bottom: 2rem; text-align: center;">
+                <button onclick="renderPosts('All')" class="filter-btn active">All</button>
+                <button onclick="renderPosts('Task 1')" class="filter-btn">Task 1</button>
+                <button onclick="renderPosts('Task 2')" class="filter-btn">Task 2</button>
+            </div>
+
+            <h2 class="section-title">Latest Writing Samples</h2>
+            
+            <div class="post-grid" id="writing-container">
+                </div>
+        </div>
+    </section>
+
+    <div id="essay-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <div class="modal-header">
+                <span id="modal-badge" class="post-badge">Task 1</span>
+                <h2 id="modal-title">Title Here</h2>
+                <p id="modal-band" style="color: var(--color-primary); font-weight:bold;">Band: 8.0</p>
+            </div>
+            <div class="modal-body">
+                <div class="question-box">
+                    <strong>Question:</strong>
+                    <p id="modal-question">Question content...</p>
+                </div>
+                <div class="answer-box">
+                    <strong>Sample Answer:</strong>
+                    <div id="modal-answer">Answer content...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="writing-data.js"></script>
+    <script src="writing-logic.js"></script>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 WDSA. All rights reserved. | IELTS Writing</p>
+        </div>
+    </footer>
+</body>
+</html>

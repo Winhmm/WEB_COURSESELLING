@@ -1,3 +1,24 @@
+header, 
+.navbar, 
+.nav-menu, 
+.dropdown-menu, 
+.btn, 
+.auth-buttons {
+    font-family: 'Arial', sans-serif !important;
+}
+
+/* 2. Chỉ áp dụng font Inter cho phần nội dung riêng của trang Resources */
+.res-hero, 
+.res-main, 
+.res-footer, 
+.res-submit-section,
+.modal,
+.res-detail-header,
+.res-detail-section {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
 .res-hero {
     background: linear-gradient(135deg, #1a472a 0%, #2d7a4e 60%, #3d9b6a 100%);
     padding: 72px 0 56px;
